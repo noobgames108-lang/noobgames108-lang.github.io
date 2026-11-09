@@ -3,583 +3,1264 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoobGamesPlatform</title>
+  <meta name="description" content="NoobGamesPlatform — новый удобный и быстрый способ скачивания ПО от студии NoobGames.">
+  <title>NoobGamesPlatform — Floor666 v1.2.0</title>
   <style>
-    /* Сброс и базовые цвета — только тёмный, без фиолетового */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      border-radius: 0 !important;
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-bg-hover: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-border-strong: rgba(255, 255, 255, 0.22);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      --glass-blur: 20px;
+      --accent: #ffd400;
+      --accent-soft: #ffe14d;
+      --text: #eaeaec;
+      --text-dim: rgba(234, 234, 236, 0.6);
+      --text-faint: rgba(234, 234, 236, 0.35);
+      --radius-lg: 32px;
+      --radius-md: 22px;
+      --radius-sm: 16px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      background-color: #080808;
-      background-image: radial-gradient(circle at 20% 30%, #1a1a1a 0%, #050505 100%);
       min-height: 100vh;
-      font-family: 'Segoe UI', 'Arial', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Inter', 'Arial', sans-serif;
+      background: #030305;
+      color: var(--text);
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 20px;
+      align-items: flex-start;
+      padding: 32px 20px;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Главный контейнер — строгий тёмный */
+    /* ===== ТЁМНЫЙ АНИМИРОВАННЫЙ ФОН ===== */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 40%, #0b0b14 0%, #030305 65%);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.18;
+      will-change: transform;
+      mix-blend-mode: screen;
+    }
+
+    .blob-1 {
+      width: 640px; height: 640px;
+      background: radial-gradient(circle, #6b5a00 0%, #2a2200 45%, transparent 70%);
+      top: -200px; left: -180px;
+      animation: float1 26s ease-in-out infinite;
+    }
+
+    .blob-2 {
+      width: 580px; height: 580px;
+      background: radial-gradient(circle, #2a2470 0%, #12103a 45%, transparent 70%);
+      bottom: -220px; right: -160px;
+      animation: float2 30s ease-in-out infinite;
+      opacity: 0.22;
+    }
+
+    .blob-3 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #003a4a 0%, #001a22 45%, transparent 70%);
+      top: 45%; left: 55%;
+      animation: float3 34s ease-in-out infinite;
+      opacity: 0.16;
+    }
+
+    .blob-4 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, #4a0028 0%, #1f0011 45%, transparent 70%);
+      top: 8%; right: 18%;
+      animation: float4 28s ease-in-out infinite;
+      opacity: 0.14;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(120px, 80px) scale(1.12); }
+      66% { transform: translate(60px, 160px) scale(0.95); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-140px, -100px) scale(1.15); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      40% { transform: translate(-180px, 120px) scale(0.9); }
+      70% { transform: translate(100px, -80px) scale(1.08); }
+    }
+    @keyframes float4 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-100px, 140px) scale(1.1); }
+    }
+
+    .bg-grain {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    /* ===== ГЛАВНЫЙ КОНТЕЙНЕР ===== */
     .app {
-      max-width: 1200px;
+      position: relative;
+      max-width: 1100px;
       width: 100%;
-      background-color: #111111;
-      border: 3px solid #333333;
-      box-shadow: 0 0 0 5px #1a1a1a, 0 16px 48px rgba(0, 0, 0, 0.95);
-      padding: 28px 28px 36px;
-      border-radius: 0px;
-      clip-path: inset(0 round 0px);
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      box-shadow:
+        var(--glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+      padding: 44px 40px 40px;
+      overflow: hidden;
+      animation: appIn 0.9s var(--ease) both;
     }
 
-    /* Заголовок */
-    .app-title {
-      font-size: 3.2rem;
+    .app::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      pointer-events: none;
+    }
+
+    @keyframes appIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ===== ВЕРХНИЙ БЛОК: NoobGames ===== */
+    .brand-header {
+      text-align: center;
+      padding-bottom: 28px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .brand-header::after {
+      content: "";
+      position: absolute;
+      bottom: -1px; left: 20%; right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 212, 0, 0.5), transparent);
+    }
+
+    .brand-title {
+      font-size: clamp(2.4rem, 7vw, 4rem);
       font-weight: 800;
-      color: #ffd400;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-align: center;
-      text-shadow: 3px 3px 0 #0a0a0a;
-      border-bottom: 4px solid #333333;
-      padding-bottom: 20px;
-      margin-bottom: 24px;
-      line-height: 1.15;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.45) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 50px rgba(255, 212, 0, 0.12);
     }
 
-    /* Описание */
+    .brand-tagline {
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      color: var(--text-dim);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-tagline strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ===== ЗАГОЛОВОК ПЛАТФОРМЫ ===== */
+    .app-title {
+      font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-align: center;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.45) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(255, 212, 0, 0.1);
+    }
+
+    .app-title .accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #cc8800 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(255, 212, 0, 0.25);
+    }
+
     .app-desc {
-      font-size: 1.4rem;
-      line-height: 1.6;
-      color: #c8c8c8;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.55;
+      color: var(--text-dim);
       text-align: center;
-      max-width: 820px;
+      max-width: 640px;
       margin: 0 auto 36px;
-      border-left: 8px solid #3a3a3a;
-      border-right: 8px solid #3a3a3a;
-      padding: 12px 24px;
+      font-weight: 400;
     }
 
-    /* Контентная область */
+    /* ===== КОНТЕНТНАЯ ОБЛАСТЬ ===== */
     .page-content {
-      background: #0d0d0d;
-      border: 4px solid #2a2a2a;
-      padding: 26px 28px 32px;
-      box-shadow: inset 0 0 0 2px #1a1a1a, 8px 8px 0 #050505;
-      margin-top: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      margin-bottom: 24px;
     }
 
-    /* Блок преимуществ */
     .features-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
     .feature-item {
       display: flex;
       align-items: center;
-      gap: 20px;
-      background: #141414;
-      border: 4px solid #2a2a2a;
-      padding: 18px 26px;
-      box-shadow: 6px 6px 0 #050505;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #cccccc;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 18px 22px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.3px;
       cursor: pointer;
-      transition: none;
       user-select: none;
+      text-align: left;
+      width: 100%;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+      transition:
+        background 0.4s var(--ease),
+        border-color 0.4s var(--ease),
+        transform 0.4s var(--ease),
+        box-shadow 0.4s var(--ease);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .feature-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 212, 0, 0.1), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+      pointer-events: none;
     }
 
     .feature-item:hover {
-      background: #1a1a1a;
-      border-color: #444444;
-      color: #ffffff;
-      box-shadow: 3px 3px 0 #050505;
-      transform: translate(3px, 3px);
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
     }
 
-    .feature-item:active {
-      background: #222222;
-      border-color: #ffd400;
-      color: #ffffff;
-      box-shadow: 2px 2px 0 #050505;
-      transform: translate(4px, 4px);
+    .feature-item:hover::after { opacity: 1; }
+    .feature-item:active { transform: translateY(0) scale(0.99); }
+    .feature-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .feature-item .label { flex: 1; }
+
+    .feature-item .arrow {
+      color: var(--text-faint);
+      font-size: 1.2rem;
+      transition: transform 0.4s var(--ease), color 0.4s var(--ease);
     }
 
-    /* Галочка */
-    .check-icon {
+    .feature-item:hover .arrow { transform: translateX(4px); color: var(--accent); }
+
+    .feature-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 44px;
       height: 44px;
-      background: #ffd400;
-      border: 4px solid #b39500;
       flex-shrink: 0;
-      box-shadow: 4px 4px 0 #050505;
+      border-radius: 13px;
+      background: rgba(255, 212, 0, 0.1);
+      border: 1px solid rgba(255, 212, 0, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
     }
 
-    .check-icon svg {
-      width: 26px;
-      height: 26px;
-      fill: #000000;
+    .feature-item:hover .feature-icon {
+      background: rgba(255, 212, 0, 0.16);
+      border-color: rgba(255, 212, 0, 0.45);
     }
 
-    /* Кнопка скачать */
-    .btn-download-wrapper {
-      text-align: center;
-      margin-bottom: 36px;
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.4s var(--ease);
     }
+
+    /* ===== КНОПКА СКАЧАТЬ ===== */
+    .btn-download-wrapper { text-align: center; margin-bottom: 28px; }
 
     .btn-download {
-      display: inline-block;
-      background: #ffd400;
-      border: 4px solid #b39500;
-      color: #000000;
-      padding: 20px 70px;
-      font-size: 2rem;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--accent) 0%, #e08600 100%);
+      color: #0a0a0a;
+      padding: 20px 64px;
+      font-size: 1.15rem;
       font-weight: 800;
       text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 8px 8px 0 #050505;
-      letter-spacing: 3px;
+      letter-spacing: 1.5px;
       text-decoration: none;
-      font-family: inherit;
-      line-height: 1;
-      border-radius: 0px;
-      transition: none;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow:
+        0 12px 40px rgba(255, 212, 0, 0.25),
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      will-change: transform;
+    }
+
+    .btn-download::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.7s var(--ease);
     }
 
     .btn-download:hover {
-      background: #ffe14d;
-      border-color: #d4b000;
-      color: #000000;
-      box-shadow: 4px 4px 0 #050505;
-      transform: translate(4px, 4px);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow:
+        0 20px 50px rgba(255, 212, 0, 0.35),
+        0 6px 16px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
-    /* Нижний блок с предупреждением */
+    .btn-download:hover::before { left: 100%; }
+    .btn-download:active { transform: translateY(-1px) scale(0.99); }
+    .btn-download:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+    .btn-download svg { width: 20px; height: 20px; fill: currentColor; }
+
     .footer-note {
-      background: #141414;
-      border: 6px solid #663333;
-      padding: 20px 26px;
-      color: #d4b0b0;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      box-shadow: 6px 6px 0 #050505;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-sm);
+      padding: 16px 22px;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-weight: 500;
       text-align: center;
       line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .footer-note .age-badge {
-      display: inline-block;
-      background: #331a1a;
-      padding: 4px 22px;
-      margin-left: 14px;
-      border: 4px solid #663333;
-      color: #e6c0c0;
-      font-size: 1.6rem;
+    .age-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 12px;
+      border-radius: 999px;
+      background: rgba(255, 212, 0, 0.1);
+      border: 1px solid rgba(255, 212, 0, 0.3);
+      color: var(--accent);
+      font-size: 0.8rem;
       font-weight: 800;
-      vertical-align: middle;
+      letter-spacing: 0.5px;
     }
 
-    /* === МОДАЛЬНОЕ ОКНО === */
+    /* ===== СЕКЦИЯ FLOOR666 ===== */
+    .floor-card {
+      position: relative;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px 30px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .floor-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), #e08600, var(--accent), transparent);
+      opacity: 0.7;
+    }
+
+    .floor-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .floor-title {
+      font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 212, 0, 0.9) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .floor-version {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 212, 0, 0.1);
+      border: 1px solid rgba(255, 212, 0, 0.3);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .floor-tagline {
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      color: var(--text-dim);
+      font-weight: 400;
+      margin-bottom: 26px;
+    }
+
+    .floor-tagline em {
+      font-style: normal;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .floor-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .floor-features li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 13px 18px;
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+
+    .floor-features li:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .floor-features .fi-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 11px;
+      background: rgba(255, 212, 0, 0.1);
+      border: 1px solid rgba(255, 212, 0, 0.28);
+    }
+
+    .floor-features .fi-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .release-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-locked {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-dim);
+      padding: 18px 48px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border-radius: 999px;
+      cursor: not-allowed;
+      user-select: none;
+      position: relative;
+      font-family: inherit;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-locked svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .countdown-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-faint);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .countdown-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      padding: 12px 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 212, 0, 0.2);
+      border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .countdown-num {
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 20px rgba(255, 212, 0, 0.3);
+    }
+
+    .countdown-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-faint);
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* ===== ИСТОРИЯ СТУДИИ ===== */
+    .history-card {
+      position: relative;
+      margin-top: 24px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px 30px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .history-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(120, 150, 255, 0.6), rgba(180, 120, 255, 0.6), transparent);
+      opacity: 0.7;
+    }
+
+    .history-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .history-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      border-radius: 13px;
+      background: rgba(120, 150, 255, 0.1);
+      border: 1px solid rgba(120, 150, 255, 0.3);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .history-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: #9bb0ff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .history-title {
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(155, 176, 255, 0.9) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .history-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-left: 18px;
+      border-left: 2px solid rgba(120, 150, 255, 0.25);
+    }
+
+    .history-body p {
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.7;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .history-body p:first-child {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .history-body .hl {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .history-body .hl-blue {
+      color: #9bb0ff;
+      font-weight: 600;
+    }
+
+    /* ===== МОДАЛЬНОЕ ОКНО ===== */
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.94);
+      inset: 0;
+      background: rgba(3, 3, 5, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 999;
+      padding: 20px;
       visibility: hidden;
       opacity: 0;
-      transition: none;
-      backdrop-filter: blur(1px);
+      transition: opacity 0.35s var(--ease), visibility 0.35s var(--ease);
     }
 
-    .modal-overlay.open {
-      visibility: visible;
-      opacity: 1;
-    }
+    .modal-overlay.open { visibility: visible; opacity: 1; }
 
     .modal-box {
-      background: #111111;
-      border: 8px solid #3a3a3a;
-      padding: 44px 48px 38px;
-      max-width: 780px;
-      width: 90%;
-      box-shadow: 18px 18px 0 #050505;
-      transform: none;
-      transition: none;
+      position: relative;
+      background: rgba(14, 14, 20, 0.82);
+      backdrop-filter: blur(36px) saturate(150%);
+      -webkit-backdrop-filter: blur(36px) saturate(150%);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: var(--radius-md);
+      padding: 36px 34px 30px;
+      max-width: 560px;
+      width: 100%;
       max-height: 85vh;
       overflow-y: auto;
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transform: translateY(20px) scale(0.96);
+      transition: transform 0.45s var(--ease);
     }
 
-    .modal-box.modal-yellow {
-      border-color: #ffd400;
+    .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+
+    .modal-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 15%; right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      pointer-events: none;
     }
 
     .modal-box p {
-      font-size: 1.5rem;
+      font-size: 1rem;
       line-height: 1.6;
-      color: #cccccc;
-      font-weight: 500;
-      margin-bottom: 20px;
-      border-left: 8px solid #4a4a4a;
-      padding-left: 28px;
+      color: var(--text-dim);
+      font-weight: 400;
+      margin-bottom: 16px;
     }
 
-    .modal-box.modal-yellow p {
-      border-left-color: #ffd400;
-      color: #e8e8e8;
-    }
+    .modal-box p strong { color: var(--text); font-weight: 600; }
 
     .modal-box .modal-steps {
       list-style: none;
+      counter-reset: step;
       padding-left: 0;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .modal-box .modal-steps li {
-      font-size: 1.4rem;
-      line-height: 1.6;
-      color: #cccccc;
-      font-weight: 500;
+      counter-increment: step;
+      position: relative;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: var(--text-dim);
       margin-bottom: 14px;
-      border-left: 8px solid #4a4a4a;
-      padding-left: 28px;
+      padding-left: 46px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
     }
 
-    .modal-box.modal-yellow .modal-steps li {
-      border-left-color: #ffd400;
-      color: #e8e8e8;
+    .modal-box .modal-steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(255, 212, 0, 0.12);
+      border: 1px solid rgba(255, 212, 0, 0.35);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.95rem;
     }
 
     .modal-box a {
-      color: #ffd400;
-      font-weight: 700;
+      color: var(--accent);
+      font-weight: 600;
       text-decoration: none;
-      border-bottom: 3px solid #b39500;
-      padding: 0 4px 2px 4px;
+      border-bottom: 1px solid rgba(255, 212, 0, 0.4);
+      transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
       word-break: break-all;
     }
 
-    .modal-box a:hover {
-      background: #222222;
-      color: #ffffff;
-    }
+    .modal-box a:hover { color: #fff; border-bottom-color: #fff; }
 
     .modal-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px 20px;
-      margin-top: 8px;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .modal-close-btn,
+    .modal-ok-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 14px 26px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      border-radius: 14px;
+      font-family: inherit;
+      transition: transform 0.3s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease);
     }
 
     .modal-close-btn {
-      background: #1a1a1a;
-      border: 4px solid #4a4a4a;
-      color: #cccccc;
-      padding: 16px 44px;
-      font-size: 1.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 6px 6px 0 #050505;
-      transition: none;
-      letter-spacing: 2px;
-      font-family: inherit;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
     }
 
     .modal-close-btn:hover {
-      background: #2a2a2a;
-      border-color: #666666;
-      color: #ffffff;
-      box-shadow: 3px 3px 0 #050505;
-      transform: translate(3px, 3px);
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
     }
 
     .modal-ok-btn {
-      background: #ffd400;
-      border: 4px solid #b39500;
-      color: #000000;
-      padding: 16px 52px;
-      font-size: 1.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 6px 6px 0 #050505;
-      letter-spacing: 2px;
-      font-family: inherit;
+      background: linear-gradient(135deg, var(--accent), #e08600);
+      border: none;
+      color: #0a0a0a;
+      box-shadow: 0 8px 24px rgba(255, 212, 0, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
     }
 
     .modal-ok-btn:hover {
-      background: #ffe14d;
-      border-color: #d4b000;
-      color: #000000;
-      box-shadow: 3px 3px 0 #050505;
-      transform: translate(3px, 3px);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255, 212, 0, 0.35);
     }
 
-    /* адаптив */
-    @media (max-width: 680px) {
-      .app {
-        padding: 14px;
-      }
-      .app-title {
-        font-size: 2rem;
-        letter-spacing: 2px;
-      }
-      .app-desc {
-        font-size: 1.1rem;
-        padding: 10px 16px;
-        border-left-width: 6px;
-        border-right-width: 6px;
-      }
-      .page-content {
-        padding: 16px;
-      }
-      .feature-item {
-        font-size: 1.1rem;
-        padding: 14px 16px;
-        gap: 14px;
-        letter-spacing: 1px;
-      }
-      .check-icon {
-        width: 34px;
-        height: 34px;
-      }
-      .check-icon svg {
-        width: 20px;
-        height: 20px;
-      }
-      .btn-download {
-        font-size: 1.4rem;
-        padding: 16px 36px;
-        letter-spacing: 2px;
-        width: 100%;
-        text-align: center;
-      }
-      .footer-note {
-        font-size: 1rem;
-        padding: 16px 18px;
-      }
-      .footer-note .age-badge {
-        font-size: 1.2rem;
-        padding: 3px 16px;
-        margin-left: 8px;
-      }
-      .modal-box {
-        padding: 28px 22px 26px;
-        border-width: 6px;
-        box-shadow: 10px 10px 0 #050505;
-      }
-      .modal-box p,
-      .modal-box .modal-steps li {
-        font-size: 1.15rem;
-        padding-left: 18px;
-        border-left-width: 6px;
-      }
-      .modal-close-btn,
-      .modal-ok-btn {
-        padding: 12px 28px;
-        font-size: 1.3rem;
-        width: 100%;
-        text-align: center;
-      }
+    .modal-close-btn:focus-visible,
+    .modal-ok-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width: 720px) {
+      .app { padding: 30px 20px 28px; border-radius: 26px; }
+      .page-content { padding: 20px 16px; }
+      .floor-card { padding: 26px 18px 24px; }
+      .history-card { padding: 26px 18px 24px; }
+      .history-body { padding-left: 14px; }
+      .features-grid { grid-template-columns: 1fr; gap: 12px; }
+      .feature-item { padding: 15px 18px; font-size: 1rem; }
+      .feature-icon { width: 40px; height: 40px; border-radius: 11px; }
+      .feature-icon svg { width: 20px; height: 20px; }
+      .btn-download { padding: 18px 40px; font-size: 1rem; width: 100%; }
+      .modal-box { padding: 28px 22px 24px; border-radius: 20px; }
+      .countdown-unit { min-width: 62px; padding: 10px 8px; }
+      .countdown-num { font-size: 1.4rem; }
+      .btn-locked { padding: 16px 32px; font-size: 0.9rem; width: 100%; }
     }
 
-    @media (max-width: 380px) {
-      .app-title {
-        font-size: 1.5rem;
+    @media (max-width: 400px) {
+      .app-title { letter-spacing: -0.8px; }
+      .app-desc { margin-bottom: 28px; }
+      .feature-item { font-size: 0.92rem; gap: 12px; }
+      .btn-download { padding: 16px 24px; font-size: 0.92rem; letter-spacing: 1px; }
+      .footer-note { font-size: 0.82rem; }
+      .floor-features li { font-size: 0.9rem; padding: 11px 14px; }
+      .floor-features .fi-icon { width: 34px; height: 34px; }
+      .floor-features .fi-icon svg { width: 18px; height: 18px; }
+      .countdown-unit { min-width: 54px; padding: 8px 6px; }
+      .countdown-num { font-size: 1.2rem; }
+      .countdown-lbl { font-size: 0.58rem; }
+      .history-icon { width: 40px; height: 40px; }
+      .history-icon svg { width: 20px; height: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
-      .feature-item {
-        font-size: 0.95rem;
-        padding: 10px 12px;
-        gap: 10px;
-      }
-      .check-icon {
-        width: 28px;
-        height: 28px;
-      }
-      .check-icon svg {
-        width: 16px;
-        height: 16px;
-      }
-      .btn-download {
-        font-size: 1.2rem;
-        padding: 14px 20px;
-      }
+      .blob { animation: none !important; }
     }
   </style>
 </head>
 <body>
 
+<div class="bg-scene" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+<div class="bg-grain" aria-hidden="true"></div>
+
 <div class="app">
-  <!-- Название -->
-  <h1 class="app-title">NoobGamesPlatform</h1>
 
-  <!-- Описание -->
-  <div class="app-desc">
+  <!-- ===== ВЕРХНИЙ БЛОК: NoobGames ===== -->
+  <header class="brand-header">
+    <h1 class="brand-title">NoobGames</h1>
+    <p class="brand-tagline"><strong>НубГеймс</strong> — захватывающие игры без интернета.</p>
+  </header>
+
+  <!-- ===== ПЛАТФОРМА ===== -->
+  <h2 class="app-title">NoobGames<span class="accent">Platform</span></h2>
+  <p class="app-desc">
     Новый удобный и быстрый способ скачивания ПО от студии NoobGames.
-  </div>
+  </p>
 
-  <!-- Контентная область -->
   <div class="page-content">
-    <!-- Преимущества -->
     <div class="features-grid">
 
-      <!-- Быстро -->
-      <div class="feature-item" data-modal="fastModal">
-        <span class="check-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-          </svg>
+      <button type="button" class="feature-item" data-modal="fastModal">
+        <span class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l1-8z"/></svg>
         </span>
-        <span>Быстро</span>
-      </div>
+        <span class="label">Быстро</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
 
-      <!-- Безопасно -->
-      <div class="feature-item" data-modal="safeModal">
-        <span class="check-icon">
+      <button type="button" class="feature-item" data-modal="safeModal">
+        <span class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            <path d="M12 2 4 5.5V11c0 5 3.4 9.4 8 10.5 4.6-1.1 8-5.5 8-10.5V5.5L12 2z"/>
+            <path d="M8.5 11.5 11 14l4.5-4.5"/>
           </svg>
         </span>
-        <span>Безопасно</span>
-      </div>
+        <span class="label">Безопасно</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
 
-      <!-- Легко -->
-      <div class="feature-item" data-modal="easyModal">
-        <span class="check-icon">
+      <button type="button" class="feature-item" data-modal="easyModal">
+        <span class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            <path d="M10 3.5a1.8 1.8 0 0 1 3.6 0c0 .6-.3 1.1-.3 1.6 0 .6.5 1.1 1.1 1.1h2.1c.8 0 1.5.7 1.5 1.5v2.1c0 .6.5 1.1 1.1 1.1.5 0 1-.3 1.6-.3a1.8 1.8 0 0 1 0 3.6c-.6 0-1.1-.3-1.6-.3-.6 0-1.1.5-1.1 1.1v2.1c0 .8-.7 1.5-1.5 1.5h-2.1c-.6 0-1.1-.5-1.1-1.1 0-.5.3-1 .3-1.6a1.8 1.8 0 0 0-3.6 0c0 .6.3 1.1.3 1.6 0 .6-.5 1.1-1.1 1.1H6.5c-.8 0-1.5-.7-1.5-1.5v-2.1c0-.6.5-1.1 1.1-1.1.5 0 1 .3 1.6.3a1.8 1.8 0 0 0 0-3.6c-.6 0-1.1.3-1.6.3C5.5 11.6 5 11.1 5 10.5V8.4c0-.8.7-1.5 1.5-1.5h2.1c.6 0 1.1-.5 1.1-1.1 0-.5-.3-1-.3-1.6z"/>
           </svg>
         </span>
-        <span>Легко</span>
-      </div>
+        <span class="label">Легко</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
 
-      <!-- Удобно -->
-      <div class="feature-item" data-modal="convenientModal">
-        <span class="check-icon">
+      <button type="button" class="feature-item" data-modal="convenientModal">
+        <span class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            <path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h13M21 18h-1"/>
+            <circle cx="15" cy="6" r="2"/>
+            <circle cx="9" cy="12" r="2"/>
+            <circle cx="19" cy="18" r="2"/>
           </svg>
         </span>
-        <span>Удобно</span>
-      </div>
+        <span class="label">Удобно</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
     </div>
 
-    <!-- Кнопка скачать -->
     <div class="btn-download-wrapper">
       <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
          class="btn-download"
          target="_blank"
-         rel="noopener noreferrer">
+         rel="noopener noreferrer"
+         aria-label="Скачать ПО (откроется в новой вкладке)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
         Скачать
       </a>
     </div>
 
-    <!-- Нижний блок -->
     <div class="footer-note">
-      ПО студии NoobGames не нарушает авторские права или правила стран.
+      <span>ПО студии NoobGames не нарушает авторские права или правила стран.</span>
       <span class="age-badge">12+</span>
     </div>
   </div>
+
+  <!-- ===== СЕКЦИЯ FLOOR666 v1.2.0 ===== -->
+  <section class="floor-card" aria-labelledby="floorTitle">
+    <div class="floor-header">
+      <h2 class="floor-title" id="floorTitle">Floor666</h2>
+      <span class="floor-version">v1.2.0</span>
+    </div>
+    <p class="floor-tagline">Настоящее будущее игры! <em>Скоро.</em></p>
+
+    <ul class="floor-features">
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="14" rx="2"/>
+            <path d="M3 15l4-4 3 3 3-4 5 5"/>
+            <circle cx="8" cy="8.5" r="1.2"/>
+          </svg>
+        </span>
+        Новая продвинутая графика
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 20V8l8-4 8 4v12"/>
+            <path d="M4 20h16"/>
+            <path d="M8 20v-4h2v4M14 20v-4h2v4"/>
+            <path d="M8 11h2M14 11h2M11 8h2"/>
+          </svg>
+        </span>
+        Новый контент — этаж 300
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/>
+          </svg>
+        </span>
+        Улучшение поведения игрока и оптимизация монстра
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 6.5A2.5 2.5 0 0 1 5.5 4H12v16H5.5A2.5 2.5 0 0 0 3 22.5v-16z"/>
+            <path d="M21 6.5A2.5 2.5 0 0 0 18.5 4H12v16h6.5a2.5 2.5 0 0 1 2.5 2.5v-16z"/>
+          </svg>
+        </span>
+        Туториалы
+      </li>
+    </ul>
+
+    <div class="release-block">
+      <button type="button" class="btn-locked" disabled aria-disabled="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="10" rx="2"/>
+          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        </svg>
+        Дата выхода: 12 ноября
+      </button>
+
+      <div>
+        <div class="countdown-label" style="text-align:center;">До релиза осталось</div>
+        <div class="countdown" id="countdown" role="timer" aria-live="polite" aria-atomic="true">
+          <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-lbl">дней</span></div>
+          <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-lbl">часов</span></div>
+          <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-lbl">минут</span></div>
+          <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-lbl">секунд</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ИСТОРИЯ СТУДИИ ===== -->
+  <section class="history-card" aria-labelledby="historyTitle">
+    <div class="history-header">
+      <span class="history-icon" aria-hidden="true">
+        <!-- Иконка книги/истории -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12 6.5C10.5 5 8.5 4 6 4H3v15h3c2.5 0 4.5 1 6 2.5 1.5-1.5 3.5-2.5 6-2.5h3V4h-3c-2.5 0-4.5 1-6 2.5z"/>
+          <path d="M12 6.5V21.5"/>
+        </svg>
+      </span>
+      <h2 class="history-title" id="historyTitle">История студии</h2>
+    </div>
+
+    <div class="history-body">
+      <p>
+        Игрок под псевдонимом <span class="hl">NoobRoblox</span> (или же его старый <span class="hl">Noob_1</span>) поинтересовался 3D-графикой. Он начал делать лёгкие проекты, и ему это понравилось.
+      </p>
+      <p>
+        Он выбрал редактор — <span class="hl-blue">Godot</span>. В итоге он придумал игру <span class="hl">Floor666</span>, сделал её и выложил.
+      </p>
+      <p>
+        И поставил себе цель — делать игры <span class="hl-blue">без интернета</span>. Он делает игры в одиночку, и ему это нравится.
+      </p>
+    </div>
+  </section>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО: Быстро -->
-<div class="modal-overlay" id="fastModal">
-  <div class="modal-box modal-yellow">
-    <p>Установите ПО быстро с помощью нашего лаунчера NoobGamesPlatform. Просто выполните три шага:</p>
+<!-- Модалки -->
+<div class="modal-overlay" id="fastModal" role="dialog" aria-modal="true" aria-labelledby="fastModalTitle" aria-hidden="true">
+  <div class="modal-box">
+    <p id="fastModalTitle">Установите ПО быстро с помощью нашего лаунчера <strong>NoobGamesPlatform</strong>. Просто выполните три шага:</p>
     <ol class="modal-steps">
       <li>Скачайте лаунчер и запустите его.</li>
       <li>Дождитесь окончания загрузки лаунчера и начните скачивать ПО.</li>
       <li>Завершите загрузку ПО и запустите его.</li>
     </ol>
     <p>Всё легко и просто!</p>
-    <button class="modal-close-btn" data-close>Закрыть</button>
+    <div class="modal-actions">
+      <button class="modal-close-btn" data-close>Закрыть</button>
+      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
+         class="modal-ok-btn" target="_blank" rel="noopener noreferrer">Скачать</a>
+    </div>
   </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО: Безопасно -->
-<div class="modal-overlay" id="safeModal">
-  <div class="modal-box modal-yellow">
-    <p>Наш лаунчер отличается высокой степенью безопасности, что вызывает доверие у многих пользователей. Вы можете убедиться в этом сами, нажав на ссылку.</p>
+<div class="modal-overlay" id="safeModal" role="dialog" aria-modal="true" aria-labelledby="safeModalTitle" aria-hidden="true">
+  <div class="modal-box">
+    <p id="safeModalTitle">Наш лаунчер отличается высокой степенью безопасности, что вызывает доверие у многих пользователей. Вы можете убедиться в этом сами, нажав на ссылку.</p>
     <p>
       <a href="https://www.virustotal.com/gui/file/856c4de77985be7167e42adcc3cc9e6085f34589ef825c0e533aef73ccaa2786?nocache=1" target="_blank" rel="noopener noreferrer">
-        Проверить на VirusTotal
+        Проверить на VirusTotal →
       </a>
     </p>
-    <button class="modal-close-btn" data-close>Закрыть</button>
+    <div class="modal-actions">
+      <button class="modal-close-btn" data-close>Закрыть</button>
+    </div>
   </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО: Легко -->
-<div class="modal-overlay" id="easyModal">
-  <div class="modal-box modal-yellow">
-    <p>Благодаря интуитивно понятному интерфейсу пользователи легко освоятся с лаунчером без необходимости знания программирования.</p>
-    <button class="modal-close-btn" data-close>Закрыть</button>
+<div class="modal-overlay" id="easyModal" role="dialog" aria-modal="true" aria-labelledby="easyModalTitle" aria-hidden="true">
+  <div class="modal-box">
+    <p id="easyModalTitle">Благодаря интуитивно понятному интерфейсу пользователи легко освоятся с лаунчером без необходимости знания программирования.</p>
+    <div class="modal-actions">
+      <button class="modal-close-btn" data-close>Закрыть</button>
+    </div>
   </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО: Удобно -->
-<div class="modal-overlay" id="convenientModal">
-  <div class="modal-box modal-yellow">
-    <p>Наш лаунчер выделяется удобными функциями. Например, вы можете прямо в нём узнать всё о свойствах, расположении и функциях программы.</p>
-    <button class="modal-close-btn" data-close>Закрыть</button>
+<div class="modal-overlay" id="convenientModal" role="dialog" aria-modal="true" aria-labelledby="convenientModalTitle" aria-hidden="true">
+  <div class="modal-box">
+    <p id="convenientModalTitle">Наш лаунчер выделяется удобными функциями. Например, вы можете прямо в нём узнать всё о свойствах, расположении и функциях программы.</p>
+    <div class="modal-actions">
+      <button class="modal-close-btn" data-close>Закрыть</button>
+    </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Открытие модалок по клику на блоки преимуществ
-    document.querySelectorAll('.feature-item[data-modal]').forEach(function (item) {
-      item.addEventListener('click', function () {
-        var modalId = this.getAttribute('data-modal');
-        var modal = document.getElementById(modalId);
-        if (modal) modal.classList.add('open');
+  (function () {
+    /* ---------- Модалки ---------- */
+    const overlays = document.querySelectorAll('.modal-overlay');
+    let lastTrigger = null;
+
+    function openModal(modal, trigger) {
+      lastTrigger = trigger;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const focusable = modal.querySelector('.modal-close-btn, .modal-ok-btn, a, button');
+      if (focusable) setTimeout(() => focusable.focus(), 50);
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastTrigger) lastTrigger.focus();
+    }
+
+    document.querySelectorAll('.feature-item[data-modal]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const modal = document.getElementById(this.getAttribute('data-modal'));
+        if (modal) openModal(modal, this);
       });
     });
 
-    // Закрытие по кнопке
     document.querySelectorAll('[data-close]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var overlay = this.closest('.modal-overlay');
-        if (overlay) overlay.classList.remove('open');
+        const overlay = this.closest('.modal-overlay');
+        if (overlay) closeModal(overlay);
       });
     });
 
-    // Закрытие по клику на фон
-    document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+    overlays.forEach(function (overlay) {
       overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) overlay.classList.remove('open');
+        if (e.target === overlay) closeModal(overlay);
       });
     });
 
-    // Закрытие по Escape
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
-        document.querySelectorAll('.modal-overlay.open').forEach(function (overlay) {
-          overlay.classList.remove('open');
-        });
+        const open = document.querySelector('.modal-overlay.open');
+        if (open) closeModal(open);
       }
     });
-  });
+
+    /* ---------- Подсветка карточек под курсором ---------- */
+    document.querySelectorAll('.feature-item').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+        el.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+      });
+    });
+
+    /* ---------- Параллакс фона ---------- */
+    const blobs = document.querySelectorAll('.blob');
+    document.addEventListener('mousemove', function (e) {
+      const x = (e.clientX / window.innerWidth - 0.5);
+      const y = (e.clientY / window.innerHeight - 0.5);
+      blobs.forEach(function (blob, i) {
+        const depth = (i + 1) * 8;
+        blob.style.transform = 'translate(' + (x * depth) + 'px, ' + (y * depth) + 'px)';
+      });
+    });
+
+    /* ---------- Обратный отсчёт до 12 ноября 12:00 ---------- */
+    const RELEASE_DATE = new Date(2026, 10, 12, 12, 0, 0); // 12 ноября 2026, 12:00
+
+    const elDays  = document.getElementById('cd-days');
+    const elHours = document.getElementById('cd-hours');
+    const elMins  = document.getElementById('cd-mins');
+    const elSecs  = document.getElementById('cd-secs');
+    const countdownEl = document.getElementById('countdown');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const now = new Date();
+      let diff = RELEASE_DATE - now;
+
+      if (diff <= 0) {
+        elDays.textContent = '00';
+        elHours.textContent = '00';
+        elMins.textContent = '00';
+        elSecs.textContent = '00';
+        if (countdownEl) countdownEl.setAttribute('aria-label', 'Релиз состоялся');
+        return;
+      }
+
+      const sec = Math.floor(diff / 1000);
+      const days  = Math.floor(sec / 86400);
+      const hours = Math.floor((sec % 86400) / 3600);
+      const mins  = Math.floor((sec % 3600) / 60);
+      const secs  = sec % 60;
+
+      elDays.textContent  = pad(days);
+      elHours.textContent = pad(hours);
+      elMins.textContent  = pad(mins);
+      elSecs.textContent  = pad(secs);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
 </script>
 
 </body>
