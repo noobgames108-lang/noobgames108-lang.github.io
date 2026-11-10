@@ -196,87 +196,6 @@
       font-weight: 600;
     }
 
-    /* ===== ЗАГОЛОВОК ПЛАТФОРМЫ ===== */
-    .app-title {
-      font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      text-align: center;
-      line-height: 1.1;
-      margin-bottom: 12px;
-      background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.45) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 40px rgba(255, 212, 0, 0.1);
-    }
-
-    .app-title .accent {
-      background: linear-gradient(135deg, var(--accent) 0%, #cc8800 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 40px rgba(255, 212, 0, 0.25);
-    }
-
-    .app-desc {
-      font-size: clamp(0.95rem, 2vw, 1.05rem);
-      line-height: 1.55;
-      color: var(--text-dim);
-      text-align: center;
-      max-width: 640px;
-      margin: 0 auto 36px;
-      font-weight: 400;
-    }
-
-    /* ===== КОНТЕНТНАЯ ОБЛАСТЬ ===== */
-    .page-content {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius-md);
-      padding: 28px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      margin-bottom: 24px;
-    }
-
-    /* ===== КНОПКА "ПОДРОБНЕЕ" (бывшая Скачать) ===== */
-    .btn-download-wrapper { text-align: center; }
-
-    .btn-download {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-dim);
-      padding: 20px 64px;
-      font-size: 1.15rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 999px;
-      cursor: pointer;
-      font-family: inherit;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      transition: transform 0.4s var(--ease), background 0.4s var(--ease), color 0.4s var(--ease), box-shadow 0.4s var(--ease);
-      will-change: transform;
-    }
-
-    .btn-download:hover {
-      background: rgba(255, 255, 255, 0.09);
-      color: var(--text);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
-
-    .btn-download:active { transform: translateY(0) scale(0.99); }
-    .btn-download:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-
-    .btn-download svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
     /* ===== СЕКЦИЯ FLOOR666 (общий стиль для v1.2.0 и v1.1.2) ===== */
     .floor-card {
       position: relative;
@@ -655,148 +574,129 @@
       letter-spacing: 0.5px;
     }
 
-    /* ===== МОДАЛЬНОЕ ОКНО ===== */
-    .modal-overlay {
+    /* ===== КРАСНОЕ МОДАЛЬНОЕ ОКНО (недоступно) ===== */
+    .alert-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(3, 3, 5, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(3, 3, 5, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 1000;
       padding: 20px;
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.35s var(--ease), visibility 0.35s var(--ease);
     }
 
-    .modal-overlay.open { visibility: visible; opacity: 1; }
+    .alert-overlay.open { visibility: visible; opacity: 1; }
 
-    .modal-box {
+    .alert-box {
       position: relative;
-      background: rgba(14, 14, 20, 0.82);
-      backdrop-filter: blur(36px) saturate(150%);
-      -webkit-backdrop-filter: blur(36px) saturate(150%);
-      border: 1px solid var(--glass-border-strong);
+      background: linear-gradient(180deg, #2a0707 0%, #1a0404 100%);
+      border: 1px solid rgba(255, 70, 70, 0.55);
       border-radius: var(--radius-md);
-      padding: 36px 34px 30px;
-      max-width: 560px;
+      padding: 34px 30px 28px;
+      max-width: 480px;
       width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
       box-shadow:
         0 24px 80px rgba(0, 0, 0, 0.7),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        0 0 0 1px rgba(255, 70, 70, 0.15),
+        0 0 60px rgba(255, 40, 40, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
       transform: translateY(20px) scale(0.96);
       transition: transform 0.45s var(--ease);
+      text-align: center;
     }
 
-    .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+    .alert-overlay.open .alert-box { transform: translateY(0) scale(1); }
 
-    .modal-box::before {
+    .alert-box::before {
       content: "";
       position: absolute;
-      top: 0; left: 15%; right: 15%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      top: 0; left: 12%; right: 12%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ff4b4b, transparent);
       pointer-events: none;
     }
 
-    .modal-box p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--text-dim);
-      font-weight: 400;
-      margin-bottom: 16px;
-    }
-
-    .modal-box p strong { color: var(--text); font-weight: 600; }
-
-    .modal-box a {
-      color: var(--accent);
-      font-weight: 600;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255, 212, 0, 0.4);
-      transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
-      word-break: break-all;
-    }
-
-    .modal-box a:hover { color: #fff; border-bottom-color: #fff; }
-
-    .modal-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
-    }
-
-    .modal-close-btn,
-    .modal-ok-btn {
-      flex: 1;
-      min-width: 120px;
-      padding: 14px 26px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      cursor: pointer;
-      border-radius: 14px;
-      font-family: inherit;
-      transition: transform 0.3s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease);
-    }
-
-    .modal-close-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
-      color: var(--text);
-    }
-
-    .modal-close-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      transform: translateY(-2px);
-    }
-
-    .modal-ok-btn {
-      background: linear-gradient(135deg, var(--accent), #e08600);
-      border: none;
-      color: #0a0a0a;
-      box-shadow: 0 8px 24px rgba(255, 212, 0, 0.25);
+    .alert-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      text-decoration: none;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 18px;
+      border-radius: 16px;
+      background: rgba(255, 60, 60, 0.12);
+      border: 1px solid rgba(255, 70, 70, 0.4);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    .modal-ok-btn:hover {
+    .alert-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #ff5b5b;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .alert-text {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #ffd9d9;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .alert-text strong { color: #ff7b7b; font-weight: 700; }
+
+    .alert-ok-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      padding: 14px 40px;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      border-radius: 14px;
+      font-family: inherit;
+      border: 1px solid rgba(255, 90, 90, 0.6);
+      color: #1a0404;
+      background: linear-gradient(135deg, #ff5b5b 0%, #d62828 100%);
+      box-shadow: 0 8px 24px rgba(255, 60, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+    }
+
+    .alert-ok-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(255, 212, 0, 0.35);
+      box-shadow: 0 12px 32px rgba(255, 60, 60, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
-    .modal-close-btn:focus-visible,
-    .modal-ok-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .alert-ok-btn:active { transform: translateY(0) scale(0.98); }
+    .alert-ok-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
     /* ===== АДАПТИВ ===== */
     @media (max-width: 720px) {
       .app { padding: 30px 20px 28px; border-radius: 26px; }
-      .page-content { padding: 20px 16px; }
       .floor-card { padding: 26px 18px 24px; }
       .history-card { padding: 26px 18px 24px; }
       .history-body { padding-left: 14px; }
-      .btn-download { padding: 18px 40px; font-size: 1rem; width: 100%; }
       .btn-install { padding: 18px 40px; font-size: 0.95rem; width: 100%; }
-      .modal-box { padding: 28px 22px 24px; border-radius: 20px; }
       .countdown-unit { min-width: 62px; padding: 10px 8px; }
       .countdown-num { font-size: 1.4rem; }
       .btn-locked { padding: 16px 32px; font-size: 0.9rem; width: 100%; }
+      .alert-box { padding: 28px 22px 24px; border-radius: 20px; }
     }
 
     @media (max-width: 400px) {
-      .app-title { letter-spacing: -0.8px; }
-      .app-desc { margin-bottom: 28px; }
-      .btn-download { padding: 16px 24px; font-size: 0.92rem; letter-spacing: 1px; }
       .btn-install { padding: 16px 24px; font-size: 0.88rem; letter-spacing: 1px; }
       .bottom-note { font-size: 0.82rem; }
       .floor-features li { font-size: 0.9rem; padding: 11px 14px; }
@@ -807,6 +707,8 @@
       .countdown-lbl { font-size: 0.58rem; }
       .history-icon { width: 40px; height: 40px; }
       .history-icon svg { width: 20px; height: 20px; }
+      .alert-text { font-size: 0.95rem; }
+      .alert-ok-btn { width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -836,27 +738,6 @@
     <h1 class="brand-title">NoobGames</h1>
     <p class="brand-tagline"><strong>НубГеймс</strong> — захватывающие игры без интернета.</p>
   </header>
-
-  <!-- ===== ПЛАТФОРМА ===== -->
-  <h2 class="app-title">NoobGames<span class="accent">Platform</span></h2>
-  <p class="app-desc">
-    Новый удобный и быстрый способ скачивания ПО от студии NoobGames.
-  </p>
-
-  <div class="page-content">
-    <div class="btn-download-wrapper">
-      <button type="button"
-              class="btn-download"
-              data-modal="launcherClosedModal"
-              aria-haspopup="dialog">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="5" y="11" width="14" height="10" rx="2"/>
-          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
-        </svg>
-        Подробнее...
-      </button>
-    </div>
-  </div>
 
   <!-- ===== СЕКЦИЯ FLOOR666 v1.2.0 ===== -->
   <section class="floor-card" aria-labelledby="floorTitle120">
@@ -1003,78 +884,55 @@
 
 </div>
 
-<!-- ===== МОДАЛКА: лаунчер закрыт ===== -->
-<div class="modal-overlay" id="launcherClosedModal" role="dialog" aria-modal="true" aria-labelledby="launcherClosedTitle" aria-hidden="true">
-  <div class="modal-box">
-    <p id="launcherClosedTitle">
-      <strong>Лаунчер закрыт.</strong> Скачивание лаунчера больше недоступно.
+<!-- ===== КРАСНОЕ ОКНО: платформа недоступна ===== -->
+<div class="alert-overlay" id="unavailableModal" role="alertdialog" aria-modal="true" aria-labelledby="unavailableText" aria-hidden="true">
+  <div class="alert-box">
+    <span class="alert-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 8v5"/>
+        <circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <p class="alert-text" id="unavailableText">
+      <strong>NoobGamesPlatform</strong> больше недоступен для скачивания.
     </p>
-    <p>
-      Теперь скачивание возможно только по прямой ссылке:
-    </p>
-    <p>
-      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
-         target="_blank"
-         rel="noopener noreferrer">
-        Перейти по ссылке для скачивания →
-      </a>
-    </p>
-    <div class="modal-actions">
-      <button class="modal-close-btn" data-close>Закрыть</button>
-      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
-         class="modal-ok-btn"
-         target="_blank"
-         rel="noopener noreferrer">Скачать</a>
-    </div>
+    <button type="button" class="alert-ok-btn" id="alertOkBtn" data-close>ОК</button>
   </div>
 </div>
 
 <script>
   (function () {
-    /* ---------- Модалки ---------- */
-    const overlays = document.querySelectorAll('.modal-overlay');
-    let lastTrigger = null;
+    /* ---------- Красное окно при входе ---------- */
+    const alertOverlay = document.getElementById('unavailableModal');
+    const alertOkBtn = document.getElementById('alertOkBtn');
 
-    function openModal(modal, trigger) {
-      lastTrigger = trigger;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
+    function openAlert() {
+      alertOverlay.classList.add('open');
+      alertOverlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      const focusable = modal.querySelector('.modal-close-btn, .modal-ok-btn, a, button');
-      if (focusable) setTimeout(() => focusable.focus(), 50);
+      setTimeout(function () { alertOkBtn.focus(); }, 60);
     }
 
-    function closeModal(modal) {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
+    function closeAlert() {
+      alertOverlay.classList.remove('open');
+      alertOverlay.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      if (lastTrigger) lastTrigger.focus();
     }
 
-    document.querySelectorAll('[data-modal]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const modal = document.getElementById(this.getAttribute('data-modal'));
-        if (modal) openModal(modal, this);
-      });
-    });
+    // Открываем сразу после загрузки страницы
+    window.addEventListener('DOMContentLoaded', openAlert);
 
-    document.querySelectorAll('[data-close]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const overlay = this.closest('.modal-overlay');
-        if (overlay) closeModal(overlay);
-      });
-    });
+    alertOkBtn.addEventListener('click', closeAlert);
 
-    overlays.forEach(function (overlay) {
-      overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) closeModal(overlay);
-      });
+    // Клик по фону и Escape тоже закрывают
+    alertOverlay.addEventListener('click', function (e) {
+      if (e.target === alertOverlay) closeAlert();
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        const open = document.querySelector('.modal-overlay.open');
-        if (open) closeModal(open);
+      if (e.key === 'Escape' && alertOverlay.classList.contains('open')) {
+        closeAlert();
       }
     });
 
