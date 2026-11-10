@@ -239,104 +239,8 @@
       margin-bottom: 24px;
     }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      padding: 18px 22px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.3px;
-      cursor: pointer;
-      user-select: none;
-      text-align: left;
-      width: 100%;
-      font-family: inherit;
-      position: relative;
-      overflow: hidden;
-      transition:
-        background 0.4s var(--ease),
-        border-color 0.4s var(--ease),
-        transform 0.4s var(--ease),
-        box-shadow 0.4s var(--ease);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .feature-item::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 212, 0, 0.1), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s var(--ease);
-      pointer-events: none;
-    }
-
-    .feature-item:hover {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-strong);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-    }
-
-    .feature-item:hover::after { opacity: 1; }
-    .feature-item:active { transform: translateY(0) scale(0.99); }
-    .feature-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-    .feature-item .label { flex: 1; }
-
-    .feature-item .arrow {
-      color: var(--text-faint);
-      font-size: 1.2rem;
-      transition: transform 0.4s var(--ease), color 0.4s var(--ease);
-    }
-
-    .feature-item:hover .arrow { transform: translateX(4px); color: var(--accent); }
-
-    .feature-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      flex-shrink: 0;
-      border-radius: 13px;
-      background: rgba(255, 212, 0, 0.1);
-      border: 1px solid rgba(255, 212, 0, 0.28);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
-    }
-
-    .feature-item:hover .feature-icon {
-      background: rgba(255, 212, 0, 0.16);
-      border-color: rgba(255, 212, 0, 0.45);
-    }
-
-    .feature-icon svg {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: stroke 0.4s var(--ease);
-    }
-
-    /* ===== КНОПКА СКАЧАТЬ ===== */
-    .btn-download-wrapper { text-align: center; margin-bottom: 28px; }
+    /* ===== КНОПКА "ПОДРОБНЕЕ" (бывшая Скачать) ===== */
+    .btn-download-wrapper { text-align: center; }
 
     .btn-download {
       position: relative;
@@ -344,78 +248,36 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      background: linear-gradient(135deg, var(--accent) 0%, #e08600 100%);
-      color: #0a0a0a;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-dim);
       padding: 20px 64px;
       font-size: 1.15rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      overflow: hidden;
-      box-shadow:
-        0 12px 40px rgba(255, 212, 0, 0.25),
-        0 4px 12px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: transform 0.4s var(--ease), background 0.4s var(--ease), color 0.4s var(--ease), box-shadow 0.4s var(--ease);
       will-change: transform;
     }
 
-    .btn-download::before {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: left 0.7s var(--ease);
-    }
-
     .btn-download:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow:
-        0 20px 50px rgba(255, 212, 0, 0.35),
-        0 6px 16px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    .btn-download:hover::before { left: 100%; }
-    .btn-download:active { transform: translateY(-1px) scale(0.99); }
-    .btn-download:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+    .btn-download:active { transform: translateY(0) scale(0.99); }
+    .btn-download:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-    .btn-download svg { width: 20px; height: 20px; fill: currentColor; }
+    .btn-download svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-    .footer-note {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: var(--radius-sm);
-      padding: 16px 22px;
-      color: var(--text-dim);
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-align: center;
-      line-height: 1.5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .age-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 12px;
-      border-radius: 999px;
-      background: rgba(255, 212, 0, 0.1);
-      border: 1px solid rgba(255, 212, 0, 0.3);
-      color: var(--accent);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    /* ===== СЕКЦИЯ FLOOR666 ===== */
+    /* ===== СЕКЦИЯ FLOOR666 (общий стиль для v1.2.0 и v1.1.2) ===== */
     .floor-card {
       position: relative;
       background: rgba(0, 0, 0, 0.35);
@@ -424,6 +286,7 @@
       padding: 32px 28px 30px;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
       overflow: hidden;
+      margin-bottom: 24px;
     }
 
     .floor-card::before {
@@ -572,6 +435,54 @@
       stroke-linejoin: round;
     }
 
+    /* Активная кнопка "Установить" для v1.1.2 */
+    .btn-install {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--accent) 0%, #e08600 100%);
+      color: #0a0a0a;
+      padding: 20px 64px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 12px 40px rgba(255, 212, 0, 0.25),
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      will-change: transform;
+    }
+
+    .btn-install::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.7s var(--ease);
+    }
+
+    .btn-install:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow:
+        0 20px 50px rgba(255, 212, 0, 0.35),
+        0 6px 16px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-install:hover::before { left: 100%; }
+    .btn-install:active { transform: translateY(-1px) scale(0.99); }
+    .btn-install:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+    .btn-install svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
     .countdown-label {
       font-size: 0.82rem;
       text-transform: uppercase;
@@ -712,6 +623,38 @@
       font-weight: 600;
     }
 
+    /* ===== НИЖНИЙ БЛОК: дисклеймер + 12+ ===== */
+    .bottom-note {
+      margin-top: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-sm);
+      padding: 16px 22px;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .age-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 12px;
+      border-radius: 999px;
+      background: rgba(255, 212, 0, 0.1);
+      border: 1px solid rgba(255, 212, 0, 0.3);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
     /* ===== МОДАЛЬНОЕ ОКНО ===== */
     .modal-overlay {
       position: fixed;
@@ -770,45 +713,6 @@
     }
 
     .modal-box p strong { color: var(--text); font-weight: 600; }
-
-    .modal-box .modal-steps {
-      list-style: none;
-      counter-reset: step;
-      padding-left: 0;
-      margin-bottom: 18px;
-    }
-
-    .modal-box .modal-steps li {
-      counter-increment: step;
-      position: relative;
-      font-size: 0.98rem;
-      line-height: 1.55;
-      color: var(--text-dim);
-      margin-bottom: 14px;
-      padding-left: 46px;
-      min-height: 32px;
-      display: flex;
-      align-items: center;
-    }
-
-    .modal-box .modal-steps li::before {
-      content: counter(step);
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      background: rgba(255, 212, 0, 0.12);
-      border: 1px solid rgba(255, 212, 0, 0.35);
-      color: var(--accent);
-      font-weight: 800;
-      font-size: 0.95rem;
-    }
 
     .modal-box a {
       color: var(--accent);
@@ -881,11 +785,8 @@
       .floor-card { padding: 26px 18px 24px; }
       .history-card { padding: 26px 18px 24px; }
       .history-body { padding-left: 14px; }
-      .features-grid { grid-template-columns: 1fr; gap: 12px; }
-      .feature-item { padding: 15px 18px; font-size: 1rem; }
-      .feature-icon { width: 40px; height: 40px; border-radius: 11px; }
-      .feature-icon svg { width: 20px; height: 20px; }
       .btn-download { padding: 18px 40px; font-size: 1rem; width: 100%; }
+      .btn-install { padding: 18px 40px; font-size: 0.95rem; width: 100%; }
       .modal-box { padding: 28px 22px 24px; border-radius: 20px; }
       .countdown-unit { min-width: 62px; padding: 10px 8px; }
       .countdown-num { font-size: 1.4rem; }
@@ -895,9 +796,9 @@
     @media (max-width: 400px) {
       .app-title { letter-spacing: -0.8px; }
       .app-desc { margin-bottom: 28px; }
-      .feature-item { font-size: 0.92rem; gap: 12px; }
       .btn-download { padding: 16px 24px; font-size: 0.92rem; letter-spacing: 1px; }
-      .footer-note { font-size: 0.82rem; }
+      .btn-install { padding: 16px 24px; font-size: 0.88rem; letter-spacing: 1px; }
+      .bottom-note { font-size: 0.82rem; }
       .floor-features li { font-size: 0.9rem; padding: 11px 14px; }
       .floor-features .fi-icon { width: 34px; height: 34px; }
       .floor-features .fi-icon svg { width: 18px; height: 18px; }
@@ -943,72 +844,24 @@
   </p>
 
   <div class="page-content">
-    <div class="features-grid">
-
-      <button type="button" class="feature-item" data-modal="fastModal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l1-8z"/></svg>
-        </span>
-        <span class="label">Быстро</span>
-        <span class="arrow" aria-hidden="true">→</span>
-      </button>
-
-      <button type="button" class="feature-item" data-modal="safeModal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2 4 5.5V11c0 5 3.4 9.4 8 10.5 4.6-1.1 8-5.5 8-10.5V5.5L12 2z"/>
-            <path d="M8.5 11.5 11 14l4.5-4.5"/>
-          </svg>
-        </span>
-        <span class="label">Безопасно</span>
-        <span class="arrow" aria-hidden="true">→</span>
-      </button>
-
-      <button type="button" class="feature-item" data-modal="easyModal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M10 3.5a1.8 1.8 0 0 1 3.6 0c0 .6-.3 1.1-.3 1.6 0 .6.5 1.1 1.1 1.1h2.1c.8 0 1.5.7 1.5 1.5v2.1c0 .6.5 1.1 1.1 1.1.5 0 1-.3 1.6-.3a1.8 1.8 0 0 1 0 3.6c-.6 0-1.1-.3-1.6-.3-.6 0-1.1.5-1.1 1.1v2.1c0 .8-.7 1.5-1.5 1.5h-2.1c-.6 0-1.1-.5-1.1-1.1 0-.5.3-1 .3-1.6a1.8 1.8 0 0 0-3.6 0c0 .6.3 1.1.3 1.6 0 .6-.5 1.1-1.1 1.1H6.5c-.8 0-1.5-.7-1.5-1.5v-2.1c0-.6.5-1.1 1.1-1.1.5 0 1 .3 1.6.3a1.8 1.8 0 0 0 0-3.6c-.6 0-1.1.3-1.6.3C5.5 11.6 5 11.1 5 10.5V8.4c0-.8.7-1.5 1.5-1.5h2.1c.6 0 1.1-.5 1.1-1.1 0-.5-.3-1-.3-1.6z"/>
-          </svg>
-        </span>
-        <span class="label">Легко</span>
-        <span class="arrow" aria-hidden="true">→</span>
-      </button>
-
-      <button type="button" class="feature-item" data-modal="convenientModal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h13M21 18h-1"/>
-            <circle cx="15" cy="6" r="2"/>
-            <circle cx="9" cy="12" r="2"/>
-            <circle cx="19" cy="18" r="2"/>
-          </svg>
-        </span>
-        <span class="label">Удобно</span>
-        <span class="arrow" aria-hidden="true">→</span>
-      </button>
-    </div>
-
     <div class="btn-download-wrapper">
-      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
-         class="btn-download"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Скачать ПО (откроется в новой вкладке)">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-        Скачать
-      </a>
-    </div>
-
-    <div class="footer-note">
-      <span>ПО студии NoobGames не нарушает авторские права или правила стран.</span>
-      <span class="age-badge">12+</span>
+      <button type="button"
+              class="btn-download"
+              data-modal="launcherClosedModal"
+              aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="10" rx="2"/>
+          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        </svg>
+        Подробнее...
+      </button>
     </div>
   </div>
 
   <!-- ===== СЕКЦИЯ FLOOR666 v1.2.0 ===== -->
-  <section class="floor-card" aria-labelledby="floorTitle">
+  <section class="floor-card" aria-labelledby="floorTitle120">
     <div class="floor-header">
-      <h2 class="floor-title" id="floorTitle">Floor666</h2>
+      <h2 class="floor-title" id="floorTitle120">Floor666</h2>
       <span class="floor-version">v1.2.0</span>
     </div>
     <p class="floor-tagline">Настоящее будущее игры! <em>Скоро.</em></p>
@@ -1076,11 +929,51 @@
     </div>
   </section>
 
+  <!-- ===== СЕКЦИЯ FLOOR666 v1.1.2 ===== -->
+  <section class="floor-card" aria-labelledby="floorTitle112">
+    <div class="floor-header">
+      <h2 class="floor-title" id="floorTitle112">Floor666</h2>
+      <span class="floor-version">v1.1.2</span>
+    </div>
+    <p class="floor-tagline">Доступная версия игры. <em>Установите сейчас.</em></p>
+
+    <ul class="floor-features">
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16v16H4z"/>
+            <path d="M15 4v16"/>
+            <circle cx="17.5" cy="12" r="0.8"/>
+          </svg>
+        </span>
+        Плавная анимация дверей
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5 2.5-2.5z"/>
+          </svg>
+        </span>
+        Исправление ошибок
+      </li>
+    </ul>
+
+    <div class="release-block">
+      <a href="https://drive.google.com/drive/folders/1ZZdCmgLnHg_ZxGDVS5yksLRkJjpJ8ZKU"
+         class="btn-install"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Установить Floor666 v1.1.2 (откроется в новой вкладке)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+        Установить
+      </a>
+    </div>
+  </section>
+
   <!-- ===== ИСТОРИЯ СТУДИИ ===== -->
   <section class="history-card" aria-labelledby="historyTitle">
     <div class="history-header">
       <span class="history-icon" aria-hidden="true">
-        <!-- Иконка книги/истории -->
         <svg viewBox="0 0 24 24">
           <path d="M12 6.5C10.5 5 8.5 4 6 4H3v15h3c2.5 0 4.5 1 6 2.5 1.5-1.5 3.5-2.5 6-2.5h3V4h-3c-2.5 0-4.5 1-6 2.5z"/>
           <path d="M12 6.5V21.5"/>
@@ -1101,54 +994,37 @@
       </p>
     </div>
   </section>
-</div>
 
-<!-- Модалки -->
-<div class="modal-overlay" id="fastModal" role="dialog" aria-modal="true" aria-labelledby="fastModalTitle" aria-hidden="true">
-  <div class="modal-box">
-    <p id="fastModalTitle">Установите ПО быстро с помощью нашего лаунчера <strong>NoobGamesPlatform</strong>. Просто выполните три шага:</p>
-    <ol class="modal-steps">
-      <li>Скачайте лаунчер и запустите его.</li>
-      <li>Дождитесь окончания загрузки лаунчера и начните скачивать ПО.</li>
-      <li>Завершите загрузку ПО и запустите его.</li>
-    </ol>
-    <p>Всё легко и просто!</p>
-    <div class="modal-actions">
-      <button class="modal-close-btn" data-close>Закрыть</button>
-      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
-         class="modal-ok-btn" target="_blank" rel="noopener noreferrer">Скачать</a>
-    </div>
+  <!-- ===== НИЖНИЙ БЛОК: дисклеймер + 12+ ===== -->
+  <div class="bottom-note">
+    <span>ПО студии NoobGames не нарушает авторские права или правила стран.</span>
+    <span class="age-badge">12+</span>
   </div>
+
 </div>
 
-<div class="modal-overlay" id="safeModal" role="dialog" aria-modal="true" aria-labelledby="safeModalTitle" aria-hidden="true">
+<!-- ===== МОДАЛКА: лаунчер закрыт ===== -->
+<div class="modal-overlay" id="launcherClosedModal" role="dialog" aria-modal="true" aria-labelledby="launcherClosedTitle" aria-hidden="true">
   <div class="modal-box">
-    <p id="safeModalTitle">Наш лаунчер отличается высокой степенью безопасности, что вызывает доверие у многих пользователей. Вы можете убедиться в этом сами, нажав на ссылку.</p>
+    <p id="launcherClosedTitle">
+      <strong>Лаунчер закрыт.</strong> Скачивание лаунчера больше недоступно.
+    </p>
     <p>
-      <a href="https://www.virustotal.com/gui/file/856c4de77985be7167e42adcc3cc9e6085f34589ef825c0e533aef73ccaa2786?nocache=1" target="_blank" rel="noopener noreferrer">
-        Проверить на VirusTotal →
+      Теперь скачивание возможно только по прямой ссылке:
+    </p>
+    <p>
+      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
+         target="_blank"
+         rel="noopener noreferrer">
+        Перейти по ссылке для скачивания →
       </a>
     </p>
     <div class="modal-actions">
       <button class="modal-close-btn" data-close>Закрыть</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="easyModal" role="dialog" aria-modal="true" aria-labelledby="easyModalTitle" aria-hidden="true">
-  <div class="modal-box">
-    <p id="easyModalTitle">Благодаря интуитивно понятному интерфейсу пользователи легко освоятся с лаунчером без необходимости знания программирования.</p>
-    <div class="modal-actions">
-      <button class="modal-close-btn" data-close>Закрыть</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="convenientModal" role="dialog" aria-modal="true" aria-labelledby="convenientModalTitle" aria-hidden="true">
-  <div class="modal-box">
-    <p id="convenientModalTitle">Наш лаунчер выделяется удобными функциями. Например, вы можете прямо в нём узнать всё о свойствах, расположении и функциях программы.</p>
-    <div class="modal-actions">
-      <button class="modal-close-btn" data-close>Закрыть</button>
+      <a href="https://drive.google.com/file/d/1Gs7JE05W8OPBpqZcoTbDyvEkRUAgMJz1/view?usp=sharing"
+         class="modal-ok-btn"
+         target="_blank"
+         rel="noopener noreferrer">Скачать</a>
     </div>
   </div>
 </div>
@@ -1175,7 +1051,7 @@
       if (lastTrigger) lastTrigger.focus();
     }
 
-    document.querySelectorAll('.feature-item[data-modal]').forEach(function (btn) {
+    document.querySelectorAll('[data-modal]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const modal = document.getElementById(this.getAttribute('data-modal'));
         if (modal) openModal(modal, this);
@@ -1202,25 +1078,23 @@
       }
     });
 
-    /* ---------- Подсветка карточек под курсором ---------- */
-    document.querySelectorAll('.feature-item').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        const rect = el.getBoundingClientRect();
-        el.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
-        el.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
-      });
-    });
-
     /* ---------- Параллакс фона ---------- */
     const blobs = document.querySelectorAll('.blob');
-    document.addEventListener('mousemove', function (e) {
-      const x = (e.clientX / window.innerWidth - 0.5);
-      const y = (e.clientY / window.innerHeight - 0.5);
-      blobs.forEach(function (blob, i) {
-        const depth = (i + 1) * 8;
-        blob.style.transform = 'translate(' + (x * depth) + 'px, ' + (y * depth) + 'px)';
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let raf = null;
+      document.addEventListener('mousemove', function (e) {
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          const x = (e.clientX / window.innerWidth - 0.5);
+          const y = (e.clientY / window.innerHeight - 0.5);
+          blobs.forEach(function (blob, i) {
+            const depth = (i + 1) * 8;
+            blob.style.transform = 'translate(' + (x * depth) + 'px, ' + (y * depth) + 'px)';
+          });
+          raf = null;
+        });
       });
-    });
+    }
 
     /* ---------- Обратный отсчёт до 12 ноября 12:00 ---------- */
     const RELEASE_DATE = new Date(2026, 10, 12, 12, 0, 0); // 12 ноября 2026, 12:00
