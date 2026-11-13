@@ -324,47 +324,7 @@
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* ===== СЕРАЯ КНОПКА "ПОДРОБНЕЕ" ===== */
-    .btn-details {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: var(--text-dim);
-      padding: 18px 48px;
-      font-size: 1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      border-radius: 999px;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-      font-family: inherit;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      transition: background 0.3s var(--ease), color 0.3s var(--ease);
-    }
-
-    .btn-details:hover {
-      background: rgba(255, 255, 255, 0.09);
-      color: var(--text);
-    }
-
-    .btn-details:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-    .btn-details .x-icon {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* Активная кнопка "Установить" */
+    /* Активная кнопка "Скачать" / "Установить" */
     .btn-install {
       display: inline-flex;
       align-items: center;
@@ -414,55 +374,6 @@
     .btn-install:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 
     .btn-install svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-    .countdown-label {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-faint);
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .countdown {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .countdown-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-width: 74px;
-      padding: 12px 10px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 212, 0, 0.2);
-      border-radius: 14px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    }
-
-    .countdown-num {
-      font-size: 1.7rem;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--accent);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.5px;
-      text-shadow: 0 0 20px rgba(255, 212, 0, 0.3);
-    }
-
-    .countdown-lbl {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-faint);
-      font-weight: 600;
-      margin-top: 6px;
-    }
 
     /* ===== ИСТОРИЯ СТУДИИ ===== */
     .history-card {
@@ -920,6 +831,25 @@
       font-weight: 500;
     }
 
+    /* Красный вариант предупреждения */
+    .alert-warning-red {
+      background: rgba(255, 60, 60, 0.1);
+      border: 1px solid rgba(255, 70, 70, 0.45);
+    }
+
+    .alert-warning-red svg {
+      stroke: #ff5b5b;
+    }
+
+    .alert-warning-red p {
+      color: #ffd9d9;
+    }
+
+    .alert-warning-red strong {
+      color: #ff8a8a;
+      font-weight: 700;
+    }
+
     .alert-actions {
       display: flex;
       flex-wrap: wrap;
@@ -1080,10 +1010,7 @@
       .social-card,
       .misc-card { padding: 26px 18px 24px; }
       .history-body { padding-left: 14px; }
-      .btn-details { padding: 16px 32px; font-size: 0.9rem; width: 100%; }
       .btn-install { padding: 18px 40px; font-size: 0.95rem; width: 100%; }
-      .countdown-unit { min-width: 62px; padding: 10px 8px; }
-      .countdown-num { font-size: 1.4rem; }
       .alert-box { padding: 28px 22px 24px; border-radius: 20px; }
       .req-table { font-size: 0.86rem; }
       .req-table tbody th { width: 45%; }
@@ -1092,15 +1019,11 @@
     }
 
     @media (max-width: 400px) {
-      .btn-details { padding: 16px 24px; font-size: 0.86rem; letter-spacing: 1px; }
       .btn-install { padding: 16px 24px; font-size: 0.88rem; letter-spacing: 1px; }
       .bottom-note { font-size: 0.82rem; }
       .floor-features li { font-size: 0.9rem; padding: 11px 14px; }
       .floor-features .fi-icon { width: 34px; height: 34px; }
       .floor-features .fi-icon svg { width: 18px; height: 18px; }
-      .countdown-unit { min-width: 54px; padding: 8px 6px; }
-      .countdown-num { font-size: 1.2rem; }
-      .countdown-lbl { font-size: 0.58rem; }
       .history-icon,
       .social-icon,
       .misc-icon { width: 40px; height: 40px; }
@@ -1150,7 +1073,7 @@
       <h2 class="floor-title" id="floorTitle120">Floor666</h2>
       <span class="floor-version">v1.2.0</span>
     </div>
-    <p class="floor-tagline">Настоящее будущее игры! <em>Скоро.</em></p>
+    <p class="floor-tagline">Настоящее будущее игры! <em>Уже доступно.</em></p>
 
     <ul class="floor-features">
       <li>
@@ -1195,25 +1118,15 @@
     </ul>
 
     <div class="release-block">
+      <!-- Кнопка "Скачать" с предупреждением о требованиях -->
       <button type="button"
-              class="btn-details"
-              id="delayTrigger"
-              aria-haspopup="dialog">
-        <svg class="x-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18"/>
-        </svg>
-        Подробнее
+              class="btn-install"
+              id="download120Trigger"
+              aria-haspopup="dialog"
+              aria-label="Скачать Floor666 v1.2.0 — открыть требования">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+        Скачать
       </button>
-
-      <div>
-        <div class="countdown-label">До релиза осталось</div>
-        <div class="countdown" id="countdown" role="timer" aria-live="polite" aria-atomic="true">
-          <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-lbl">дней</span></div>
-          <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-lbl">часов</span></div>
-          <div class="countdown-unit"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-lbl">минут</span></div>
-          <div class="countdown-unit"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-lbl">секунд</span></div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1376,27 +1289,8 @@
 
 </div>
 
-<!-- ===== КРАСНОЕ ОКНО: релиз задерживается ===== -->
-<div class="alert-overlay" id="delayModal" role="alertdialog" aria-modal="true" aria-labelledby="delayText" aria-hidden="true">
-  <div class="alert-box" style="background: linear-gradient(180deg, #2a0707 0%, #1a0404 100%); border-color: rgba(255, 70, 70, 0.55);">
-    <span class="alert-icon" aria-hidden="true" style="background: rgba(255, 60, 60, 0.12); border-color: rgba(255, 70, 70, 0.4);">
-      <svg viewBox="0 0 24 24" style="stroke: #ff5b5b;">
-        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
-        <path d="M12 9v5"/>
-        <circle cx="12" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
-      </svg>
-    </span>
-    <p class="alert-text" id="delayText" style="text-align: center; color: #ffd9d9;">
-      <strong style="color: #ff7b7b;">Релиз задерживается</strong> на неизвестный срок.
-    </p>
-    <div class="alert-actions">
-      <button type="button" class="alert-close-btn" data-close>ОК</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== ОКНО: минимальные требования ===== -->
-<div class="alert-overlay" id="requirementsModal" role="dialog" aria-modal="true" aria-labelledby="reqTitle" aria-hidden="true">
+<!-- ===== ОКНО ТРЕБОВАНИЙ: Floor666 v1.2.0 ===== -->
+<div class="alert-overlay" id="requirements120Modal" role="dialog" aria-modal="true" aria-labelledby="req120Title" aria-hidden="true">
   <div class="alert-box req-box">
     <span class="alert-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24">
@@ -1405,7 +1299,7 @@
         <circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
       </svg>
     </span>
-    <p class="alert-text" id="reqTitle" style="text-align: center;">
+    <p class="alert-text" id="req120Title" style="text-align: center;">
       Посмотрите, <strong>соответствует ли минимальным требованиям</strong> ваш компьютер?
     </p>
 
@@ -1450,6 +1344,86 @@
     <p class="req-note">
       Если ваш компьютер не соответствует минимальным требованиям, игра может не запуститься или работать некорректно.
     </p>
+
+    <div class="alert-actions">
+      <button type="button" class="alert-close-btn" data-close>Закрыть</button>
+      <a href="https://drive.google.com/file/d/1E3LM4iBshj_uIiGNgaEjGLYXkonIB5Bo/view?usp=sharing"
+         class="alert-ok-btn"
+         target="_blank"
+         rel="noopener noreferrer"
+         data-close>ОК</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ОКНО ТРЕБОВАНИЙ: Floor666 v1.1.2 ===== -->
+<div class="alert-overlay" id="requirements112Modal" role="dialog" aria-modal="true" aria-labelledby="req112Title" aria-hidden="true">
+  <div class="alert-box req-box">
+    <span class="alert-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 8v5"/>
+        <circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <p class="alert-text" id="req112Title" style="text-align: center;">
+      Посмотрите, <strong>соответствует ли минимальным требованиям</strong> ваш компьютер?
+    </p>
+
+    <table class="req-table">
+      <thead>
+        <tr>
+          <th scope="col">Параметр</th>
+          <th scope="col">Минимум</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Операционная система</th>
+          <td>Windows 10 / 11 (64-bit), Linux, macOS</td>
+        </tr>
+        <tr>
+          <th scope="row">Графический API</th>
+          <td>Vulkan 1.0+</td>
+        </tr>
+        <tr>
+          <th scope="row">Видеокарта</th>
+          <td>С поддержкой Vulkan (NVIDIA GTX 1050 / AMD RX 560 / Intel HD 620 и выше)</td>
+        </tr>
+        <tr>
+          <th scope="row">Процессор</th>
+          <td>2 ядра, 2.0 ГГц (x86_64)</td>
+        </tr>
+        <tr>
+          <th scope="row">Оперативная память</th>
+          <td>4 ГБ</td>
+        </tr>
+        <tr>
+          <th scope="row">Свободное место</th>
+          <td>≈ 1 ГБ</td>
+        </tr>
+        <tr>
+          <th scope="row">Движок</th>
+          <td>Godot 4 (рендер Vulkan / Forward+)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="req-note">
+      Если ваш компьютер не соответствует минимальным требованиям, игра может не запуститься или работать некорректно.
+    </p>
+
+    <!-- Красное предупреждение о новой версии -->
+    <div class="alert-warning alert-warning-red">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+        <path d="M12 9v5"/>
+        <circle cx="12" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+      <p>
+        <strong>Настоятельно рекомендуем установить новейшую версию:</strong>
+        в ней больше контента, лучше оптимизация и меньше ошибок.
+      </p>
+    </div>
 
     <div class="alert-actions">
       <button type="button" class="alert-close-btn" data-close>Закрыть</button>
@@ -1556,16 +1530,16 @@
       if (lastTrigger) lastTrigger.focus();
     }
 
-    /* ---------- Окно "Релиз задерживается" ---------- */
-    const delayModal = document.getElementById('delayModal');
-    document.getElementById('delayTrigger').addEventListener('click', function () {
-      openAlert(delayModal, this);
+    /* ---------- Окно требований для v1.2.0 ---------- */
+    const requirements120Modal = document.getElementById('requirements120Modal');
+    document.getElementById('download120Trigger').addEventListener('click', function () {
+      openAlert(requirements120Modal, this);
     });
 
-    /* ---------- Окно "Минимальные требования" для v1.1.2 ---------- */
-    const requirementsModal = document.getElementById('requirementsModal');
+    /* ---------- Окно требований для v1.1.2 ---------- */
+    const requirements112Modal = document.getElementById('requirements112Modal');
     document.getElementById('installTrigger').addEventListener('click', function () {
-      openAlert(requirementsModal, this);
+      openAlert(requirements112Modal, this);
     });
 
     /* ---------- Окно "Правообладателям" ---------- */
@@ -1602,45 +1576,6 @@
         if (open) closeAlert(open);
       }
     });
-
-    /* ---------- Обратный отсчёт до 12 ноября 12:00 ---------- */
-    const RELEASE_DATE = new Date(2026, 10, 12, 12, 0, 0);
-
-    const elDays  = document.getElementById('cd-days');
-    const elHours = document.getElementById('cd-hours');
-    const elMins  = document.getElementById('cd-mins');
-    const elSecs  = document.getElementById('cd-secs');
-    const countdownEl = document.getElementById('countdown');
-
-    function pad(n) { return String(n).padStart(2, '0'); }
-
-    function tick() {
-      const now = new Date();
-      let diff = RELEASE_DATE - now;
-
-      if (diff <= 0) {
-        elDays.textContent = '00';
-        elHours.textContent = '00';
-        elMins.textContent = '00';
-        elSecs.textContent = '00';
-        if (countdownEl) countdownEl.setAttribute('aria-label', 'Релиз состоялся');
-        return;
-      }
-
-      const sec = Math.floor(diff / 1000);
-      const days  = Math.floor(sec / 86400);
-      const hours = Math.floor((sec % 86400) / 3600);
-      const mins  = Math.floor((sec % 3600) / 60);
-      const secs  = sec % 60;
-
-      elDays.textContent  = pad(days);
-      elHours.textContent = pad(hours);
-      elMins.textContent  = pad(mins);
-      elSecs.textContent  = pad(secs);
-    }
-
-    tick();
-    setInterval(tick, 1000);
   })();
 </script>
 
