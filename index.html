@@ -50,15 +50,14 @@
       overflow: hidden;
       background:
         radial-gradient(circle at 50% 40%, #0b0b14 0%, #030305 65%);
+      contain: strict;
     }
 
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(110px);
       opacity: 0.18;
       will-change: transform;
-      mix-blend-mode: screen;
     }
 
     .blob-1 {
@@ -119,6 +118,7 @@
       opacity: 0.035;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       mix-blend-mode: overlay;
+      contain: strict;
     }
 
     /* ===== ГЛАВНЫЙ КОНТЕЙНЕР ===== */
@@ -138,6 +138,7 @@
       padding: 44px 40px 40px;
       overflow: hidden;
       animation: appIn 0.9s var(--ease) both;
+      isolation: isolate;
     }
 
     .app::before {
@@ -196,7 +197,7 @@
       font-weight: 600;
     }
 
-    /* ===== СЕКЦИЯ FLOOR666 (общий стиль для v1.2.0 и v1.1.2) ===== */
+    /* ===== СЕКЦИЯ FLOOR666 ===== */
     .floor-card {
       position: relative;
       background: rgba(0, 0, 0, 0.35);
@@ -323,7 +324,8 @@
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .btn-locked {
+    /* ===== СЕРАЯ КНОПКА "ПОДРОБНЕЕ" ===== */
+    .btn-details {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -337,24 +339,32 @@
       text-transform: uppercase;
       letter-spacing: 1.2px;
       border-radius: 999px;
-      cursor: not-allowed;
+      cursor: pointer;
       user-select: none;
       position: relative;
       font-family: inherit;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: background 0.3s var(--ease), color 0.3s var(--ease);
     }
 
-    .btn-locked svg {
+    .btn-details:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text);
+    }
+
+    .btn-details:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .btn-details .x-icon {
       width: 18px;
       height: 18px;
       fill: none;
       stroke: currentColor;
-      stroke-width: 2;
+      stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    /* Активная кнопка "Установить" для v1.1.2 */
+    /* Активная кнопка "Установить" */
     .btn-install {
       display: inline-flex;
       align-items: center;
@@ -368,9 +378,12 @@
       text-transform: uppercase;
       letter-spacing: 1.5px;
       text-decoration: none;
+      border: none;
       border-radius: 999px;
       overflow: hidden;
       position: relative;
+      cursor: pointer;
+      font-family: inherit;
       box-shadow:
         0 12px 40px rgba(255, 212, 0, 0.25),
         0 4px 12px rgba(0, 0, 0, 0.4),
@@ -408,7 +421,8 @@
       letter-spacing: 1.5px;
       color: var(--text-faint);
       font-weight: 600;
-      margin-bottom: 2px;
+      margin-bottom: 8px;
+      text-align: center;
     }
 
     .countdown {
@@ -542,7 +556,214 @@
       font-weight: 600;
     }
 
-    /* ===== НИЖНИЙ БЛОК: дисклеймер + 12+ ===== */
+    /* ===== СОЦСЕТИ СТУДИИ ===== */
+    .social-card {
+      position: relative;
+      margin-top: 24px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px 30px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .social-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(60, 170, 255, 0.7), rgba(60, 200, 255, 0.7), transparent);
+      opacity: 0.8;
+    }
+
+    .social-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      border-radius: 13px;
+      background: rgba(60, 170, 255, 0.1);
+      border: 1px solid rgba(60, 170, 255, 0.3);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .social-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: #4cb6ff;
+    }
+
+    .social-title {
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(90, 190, 255, 0.9) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card-desc {
+      font-size: clamp(0.92rem, 2vw, 1rem);
+      line-height: 1.6;
+      color: var(--text-dim);
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .social-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 32px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 999px;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      border: 1px solid rgba(60, 170, 255, 0.5);
+      color: #e8f6ff;
+      background: linear-gradient(135deg, #2a9cf0 0%, #1a6fbf 100%);
+      box-shadow:
+        0 10px 30px rgba(50, 150, 240, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 40px rgba(50, 150, 240, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .social-btn:active { transform: translateY(0) scale(0.99); }
+    .social-btn:focus-visible { outline: 2px solid #4cb6ff; outline-offset: 4px; }
+
+    .social-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* ===== РАЗНОЕ ===== */
+    .misc-card {
+      position: relative;
+      margin-top: 24px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px 30px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .misc-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(200, 200, 220, 0.5), rgba(220, 220, 240, 0.5), transparent);
+      opacity: 0.7;
+    }
+
+    .misc-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .misc-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      border-radius: 13px;
+      background: rgba(200, 200, 220, 0.08);
+      border: 1px solid rgba(200, 200, 220, 0.25);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .misc-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: #d4d4e8;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .misc-title {
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(210, 210, 230, 0.85) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .misc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .misc-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 32px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+
+    .misc-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .misc-btn:active { transform: translateY(0) scale(0.99); }
+    .misc-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* ===== НИЖНИЙ БЛОК ===== */
     .bottom-note {
       margin-top: 24px;
       background: rgba(255, 255, 255, 0.03);
@@ -574,7 +795,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* ===== КРАСНОЕ МОДАЛЬНОЕ ОКНО (недоступно) ===== */
+    /* ===== МОДАЛЬНЫЕ ОКНА ===== */
     .alert-overlay {
       position: fixed;
       inset: 0;
@@ -595,16 +816,16 @@
 
     .alert-box {
       position: relative;
-      background: linear-gradient(180deg, #2a0707 0%, #1a0404 100%);
-      border: 1px solid rgba(255, 70, 70, 0.55);
+      background: linear-gradient(180deg, #1a1a22 0%, #12121a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: var(--radius-md);
       padding: 34px 30px 28px;
       max-width: 480px;
       width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
       box-shadow:
         0 24px 80px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 70, 70, 0.15),
-        0 0 60px rgba(255, 40, 40, 0.25),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
       transform: translateY(20px) scale(0.96);
       transition: transform 0.45s var(--ease);
@@ -618,7 +839,7 @@
       position: absolute;
       top: 0; left: 12%; right: 12%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #ff4b4b, transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
       pointer-events: none;
     }
 
@@ -630,8 +851,8 @@
       height: 56px;
       margin-bottom: 18px;
       border-radius: 16px;
-      background: rgba(255, 60, 60, 0.12);
-      border: 1px solid rgba(255, 70, 70, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
@@ -639,64 +860,239 @@
       width: 28px;
       height: 28px;
       fill: none;
-      stroke: #ff5b5b;
+      stroke: var(--accent);
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
     .alert-text {
-      font-size: 1.05rem;
-      line-height: 1.55;
-      color: #ffd9d9;
-      font-weight: 500;
-      margin-bottom: 24px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-dim);
+      font-weight: 400;
+      margin-bottom: 16px;
+      text-align: left;
     }
 
-    .alert-text strong { color: #ff7b7b; font-weight: 700; }
+    .alert-text strong { color: var(--text); font-weight: 600; }
 
-    .alert-ok-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 140px;
-      padding: 14px 40px;
-      font-size: 1rem;
+    .alert-text a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 212, 0, 0.4);
+      transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+      word-break: break-all;
+    }
+
+    .alert-text a:hover { color: #fff; border-bottom-color: #fff; }
+
+    .alert-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255, 200, 60, 0.08);
+      border: 1px solid rgba(255, 200, 60, 0.3);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .alert-warning svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      fill: none;
+      stroke: #ffd452;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .alert-warning p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #ffe7b0;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .alert-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .alert-close-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 14px 26px;
+      font-size: 0.95rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       cursor: pointer;
       border-radius: 14px;
       font-family: inherit;
-      border: 1px solid rgba(255, 90, 90, 0.6);
-      color: #1a0404;
-      background: linear-gradient(135deg, #ff5b5b 0%, #d62828 100%);
-      box-shadow: 0 8px 24px rgba(255, 60, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text);
+      transition: transform 0.3s var(--ease), background 0.3s var(--ease);
     }
 
-    .alert-ok-btn:hover {
+    .alert-close-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(255, 60, 60, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
+    .alert-close-btn:active { transform: translateY(0) scale(0.98); }
+    .alert-close-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ===== ОКНО ТРЕБОВАНИЙ (янтарное) ===== */
+    .req-box {
+      background: linear-gradient(180deg, #2a2207 0%, #1a1404 100%);
+      border: 1px solid rgba(255, 200, 70, 0.55);
+      max-width: 560px;
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 200, 70, 0.15),
+        0 0 60px rgba(255, 190, 40, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .req-box::before {
+      background: linear-gradient(90deg, transparent, #ffcf4b, transparent);
+    }
+
+    .req-box .alert-icon {
+      background: rgba(255, 200, 60, 0.12);
+      border-color: rgba(255, 200, 70, 0.4);
+    }
+
+    .req-box .alert-icon svg { stroke: #ffd452; }
+
+    .req-box .alert-text { color: #fff0c4; }
+    .req-box .alert-text strong { color: #ffe08a; }
+
+    .req-box .alert-ok-btn {
+      border-color: rgba(255, 210, 90, 0.6);
+      color: #1a1200;
+      background: linear-gradient(135deg, #ffd452 0%, #d69500 100%);
+      box-shadow: 0 8px 24px rgba(255, 200, 60, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .req-box .alert-ok-btn:hover {
+      box-shadow: 0 12px 32px rgba(255, 200, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .req-box .alert-close-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 210, 90, 0.3);
+      color: #fff0c4;
+    }
+
+    .req-box .alert-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .alert-ok-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 14px 26px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 14px;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+
+    .alert-ok-btn:hover { transform: translateY(-2px); }
     .alert-ok-btn:active { transform: translateY(0) scale(0.98); }
     .alert-ok-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+    /* Таблица требований */
+    .req-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 8px;
+      font-size: 0.92rem;
+      text-align: left;
+      color: #fff0c4;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .req-table thead th {
+      background: rgba(255, 200, 60, 0.14);
+      color: #ffe08a;
+      font-weight: 800;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 200, 70, 0.25);
+    }
+
+    .req-table tbody th,
+    .req-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 200, 70, 0.12);
+      vertical-align: top;
+      line-height: 1.45;
+    }
+
+    .req-table tbody th {
+      color: #ffe08a;
+      font-weight: 700;
+      width: 42%;
+      background: rgba(255, 200, 60, 0.05);
+    }
+
+    .req-table tbody td { color: #f4e6bd; }
+
+    .req-table tbody tr:last-child th,
+    .req-table tbody tr:last-child td { border-bottom: none; }
+
+    .req-note {
+      font-size: 0.8rem;
+      color: rgba(255, 240, 196, 0.55);
+      margin: 4px 0 6px;
+      line-height: 1.45;
+      text-align: left;
+    }
 
     /* ===== АДАПТИВ ===== */
     @media (max-width: 720px) {
       .app { padding: 30px 20px 28px; border-radius: 26px; }
       .floor-card { padding: 26px 18px 24px; }
-      .history-card { padding: 26px 18px 24px; }
+      .history-card,
+      .social-card,
+      .misc-card { padding: 26px 18px 24px; }
       .history-body { padding-left: 14px; }
+      .btn-details { padding: 16px 32px; font-size: 0.9rem; width: 100%; }
       .btn-install { padding: 18px 40px; font-size: 0.95rem; width: 100%; }
       .countdown-unit { min-width: 62px; padding: 10px 8px; }
       .countdown-num { font-size: 1.4rem; }
-      .btn-locked { padding: 16px 32px; font-size: 0.9rem; width: 100%; }
       .alert-box { padding: 28px 22px 24px; border-radius: 20px; }
+      .req-table { font-size: 0.86rem; }
+      .req-table tbody th { width: 45%; }
+      .social-btn,
+      .misc-btn { width: 100%; }
     }
 
     @media (max-width: 400px) {
+      .btn-details { padding: 16px 24px; font-size: 0.86rem; letter-spacing: 1px; }
       .btn-install { padding: 16px 24px; font-size: 0.88rem; letter-spacing: 1px; }
       .bottom-note { font-size: 0.82rem; }
       .floor-features li { font-size: 0.9rem; padding: 11px 14px; }
@@ -705,10 +1101,19 @@
       .countdown-unit { min-width: 54px; padding: 8px 6px; }
       .countdown-num { font-size: 1.2rem; }
       .countdown-lbl { font-size: 0.58rem; }
-      .history-icon { width: 40px; height: 40px; }
-      .history-icon svg { width: 20px; height: 20px; }
+      .history-icon,
+      .social-icon,
+      .misc-icon { width: 40px; height: 40px; }
+      .history-icon svg,
+      .social-icon svg,
+      .misc-icon svg { width: 20px; height: 20px; }
       .alert-text { font-size: 0.95rem; }
-      .alert-ok-btn { width: 100%; }
+      .alert-close-btn,
+      .alert-ok-btn { width: 100%; flex: 1 1 100%; }
+      .req-table { font-size: 0.8rem; }
+      .req-table thead th,
+      .req-table tbody th,
+      .req-table tbody td { padding: 8px 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -790,16 +1195,18 @@
     </ul>
 
     <div class="release-block">
-      <button type="button" class="btn-locked" disabled aria-disabled="true">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="5" y="11" width="14" height="10" rx="2"/>
-          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+      <button type="button"
+              class="btn-details"
+              id="delayTrigger"
+              aria-haspopup="dialog">
+        <svg class="x-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
         </svg>
-        Дата выхода: 12 ноября
+        Подробнее
       </button>
 
       <div>
-        <div class="countdown-label" style="text-align:center;">До релиза осталось</div>
+        <div class="countdown-label">До релиза осталось</div>
         <div class="countdown" id="countdown" role="timer" aria-live="polite" aria-atomic="true">
           <div class="countdown-unit"><span class="countdown-num" id="cd-days">00</span><span class="countdown-lbl">дней</span></div>
           <div class="countdown-unit"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-lbl">часов</span></div>
@@ -840,14 +1247,14 @@
     </ul>
 
     <div class="release-block">
-      <a href="https://drive.google.com/drive/folders/1ZZdCmgLnHg_ZxGDVS5yksLRkJjpJ8ZKU"
-         class="btn-install"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="Установить Floor666 v1.1.2 (откроется в новой вкладке)">
+      <button type="button"
+              class="btn-install"
+              id="installTrigger"
+              aria-haspopup="dialog"
+              aria-label="Установить Floor666 v1.1.2 — открыть требования">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
         Установить
-      </a>
+      </button>
     </div>
   </section>
 
@@ -873,10 +1280,95 @@
       <p>
         И поставил себе цель — делать игры <span class="hl-blue">без интернета</span>. Он делает игры в одиночку, и ему это нравится.
       </p>
+      <p>
+        Разработчик раньше делал проекты на <span class="hl-blue">HTML</span>. Такие как <span class="hl">NoobAI</span> и <span class="hl">NoobCode</span>, но они были закрыты.
+      </p>
+      <p>
+        Разработчик начал делать проекты в <span class="hl">феврале 2026 года</span> и по сей день выпускает обновления ПО.
+      </p>
     </div>
   </section>
 
-  <!-- ===== НИЖНИЙ БЛОК: дисклеймер + 12+ ===== -->
+  <!-- ===== СОЦСЕТИ СТУДИИ ===== -->
+  <section class="social-card" aria-labelledby="socialTitle">
+    <div class="social-header">
+      <span class="social-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+        </svg>
+      </span>
+      <h2 class="social-title" id="socialTitle">Соцсети студии</h2>
+    </div>
+    <p class="card-desc">Следите за нашими соцсетями чтобы быть в курсе всех новостей!</p>
+
+    <div class="social-actions">
+      <a href="https://t.me/floor666game"
+         class="social-btn"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Перейти в Telegram-канал студии (откроется в новой вкладке)">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+        </svg>
+        Telegram
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== РАЗНОЕ ===== -->
+  <section class="misc-card" aria-labelledby="miscTitle">
+    <div class="misc-header">
+      <span class="misc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <circle cx="8" cy="12" r="0.9" fill="currentColor" stroke="none"/>
+          <circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none"/>
+          <circle cx="16" cy="12" r="0.9" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <h2 class="misc-title" id="miscTitle">Разное</h2>
+    </div>
+    <p class="card-desc">Дополнительная информация, которая обычно не нужна игрокам.</p>
+
+    <div class="misc-actions">
+      <button type="button"
+              class="misc-btn"
+              id="rightsTrigger"
+              aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5"/>
+          <circle cx="12" cy="16" r="0.8" fill="currentColor" stroke="none"/>
+        </svg>
+        Правообладателям
+      </button>
+
+      <button type="button"
+              class="misc-btn"
+              id="contactTrigger"
+              aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 7l9 6 9-6"/>
+        </svg>
+        Связаться с владельцем
+      </button>
+
+      <button type="button"
+              class="misc-btn"
+              id="softwareTrigger"
+              aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="14" rx="2"/>
+          <path d="M8 21h8M12 18v3"/>
+          <path d="M7 9l3 2-3 2M12 13h4"/>
+        </svg>
+        Программы для создания ПО
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== НИЖНИЙ БЛОК ===== -->
   <div class="bottom-note">
     <span>ПО студии NoobGames не нарушает авторские права или правила стран.</span>
     <span class="age-badge">12+</span>
@@ -884,9 +1376,28 @@
 
 </div>
 
-<!-- ===== КРАСНОЕ ОКНО: платформа недоступна ===== -->
-<div class="alert-overlay" id="unavailableModal" role="alertdialog" aria-modal="true" aria-labelledby="unavailableText" aria-hidden="true">
-  <div class="alert-box">
+<!-- ===== КРАСНОЕ ОКНО: релиз задерживается ===== -->
+<div class="alert-overlay" id="delayModal" role="alertdialog" aria-modal="true" aria-labelledby="delayText" aria-hidden="true">
+  <div class="alert-box" style="background: linear-gradient(180deg, #2a0707 0%, #1a0404 100%); border-color: rgba(255, 70, 70, 0.55);">
+    <span class="alert-icon" aria-hidden="true" style="background: rgba(255, 60, 60, 0.12); border-color: rgba(255, 70, 70, 0.4);">
+      <svg viewBox="0 0 24 24" style="stroke: #ff5b5b;">
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+        <path d="M12 9v5"/>
+        <circle cx="12" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <p class="alert-text" id="delayText" style="text-align: center; color: #ffd9d9;">
+      <strong style="color: #ff7b7b;">Релиз задерживается</strong> на неизвестный срок.
+    </p>
+    <div class="alert-actions">
+      <button type="button" class="alert-close-btn" data-close>ОК</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ОКНО: минимальные требования ===== -->
+<div class="alert-overlay" id="requirementsModal" role="dialog" aria-modal="true" aria-labelledby="reqTitle" aria-hidden="true">
+  <div class="alert-box req-box">
     <span class="alert-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9"/>
@@ -894,68 +1405,206 @@
         <circle cx="12" cy="16.5" r="0.9" fill="currentColor" stroke="none"/>
       </svg>
     </span>
-    <p class="alert-text" id="unavailableText">
-      <strong>NoobGamesPlatform</strong> больше недоступен для скачивания.
+    <p class="alert-text" id="reqTitle" style="text-align: center;">
+      Посмотрите, <strong>соответствует ли минимальным требованиям</strong> ваш компьютер?
     </p>
-    <button type="button" class="alert-ok-btn" id="alertOkBtn" data-close>ОК</button>
+
+    <table class="req-table">
+      <thead>
+        <tr>
+          <th scope="col">Параметр</th>
+          <th scope="col">Минимум</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Операционная система</th>
+          <td>Windows 10 / 11 (64-bit), Linux, macOS</td>
+        </tr>
+        <tr>
+          <th scope="row">Графический API</th>
+          <td>Vulkan 1.0+</td>
+        </tr>
+        <tr>
+          <th scope="row">Видеокарта</th>
+          <td>С поддержкой Vulkan (NVIDIA GTX 1050 / AMD RX 560 / Intel HD 620 и выше)</td>
+        </tr>
+        <tr>
+          <th scope="row">Процессор</th>
+          <td>2 ядра, 2.0 ГГц (x86_64)</td>
+        </tr>
+        <tr>
+          <th scope="row">Оперативная память</th>
+          <td>4 ГБ</td>
+        </tr>
+        <tr>
+          <th scope="row">Свободное место</th>
+          <td>≈ 1 ГБ</td>
+        </tr>
+        <tr>
+          <th scope="row">Движок</th>
+          <td>Godot 4 (рендер Vulkan / Forward+)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="req-note">
+      Если ваш компьютер не соответствует минимальным требованиям, игра может не запуститься или работать некорректно.
+    </p>
+
+    <div class="alert-actions">
+      <button type="button" class="alert-close-btn" data-close>Закрыть</button>
+      <a href="https://drive.google.com/drive/folders/1ZZdCmgLnHg_ZxGDVS5yksLRkJjpJ8ZKU"
+         class="alert-ok-btn"
+         target="_blank"
+         rel="noopener noreferrer"
+         data-close>ОК</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ОКНО: Правообладателям ===== -->
+<div class="alert-overlay" id="rightsModal" role="dialog" aria-modal="true" aria-labelledby="rightsTitle" aria-hidden="true">
+  <div class="alert-box">
+    <span class="alert-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5"/>
+        <circle cx="12" cy="16" r="0.8" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <p class="alert-text" id="rightsTitle">
+      Assets such as sounds and media files are used in services distributed with or without attribution. Examples include <strong>FreeSound</strong> and other free services.
+    </p>
+    <div class="alert-actions">
+      <button type="button" class="alert-close-btn" data-close>Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ОКНО: Связаться с владельцем ===== -->
+<div class="alert-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactTitle" aria-hidden="true">
+  <div class="alert-box">
+    <span class="alert-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M3 7l9 6 9-6"/>
+      </svg>
+    </span>
+    <p class="alert-text" id="contactTitle">
+      Вы можете связаться с владельцем по этому почтовому адресу
+      <a href="mailto:noobgames108@gmail.com">noobgames108@gmail.com</a>
+    </p>
+    <div class="alert-warning">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+        <path d="M12 9v5"/>
+        <circle cx="12" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+      <p>Просим не присылать не по теме. Предложения, ошибки принимаются.</p>
+    </div>
+    <div class="alert-actions">
+      <button type="button" class="alert-close-btn" data-close>Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ОКНО: Программы для создания ПО ===== -->
+<div class="alert-overlay" id="softwareModal" role="dialog" aria-modal="true" aria-labelledby="softwareTitle" aria-hidden="true">
+  <div class="alert-box">
+    <span class="alert-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="14" rx="2"/>
+        <path d="M8 21h8M12 18v3"/>
+        <path d="M7 9l3 2-3 2M12 13h4"/>
+      </svg>
+    </span>
+    <p class="alert-text" id="softwareTitle">
+      Для Floor666 используется <strong>Godot версии 4</strong>.
+    </p>
+    <div class="alert-warning">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+        <path d="M12 9v5"/>
+        <circle cx="12" cy="17.5" r="0.9" fill="currentColor" stroke="none"/>
+      </svg>
+      <p>В данный момент студия поддерживает только одно ПО.</p>
+    </div>
+    <div class="alert-actions">
+      <button type="button" class="alert-close-btn" data-close>Закрыть</button>
+    </div>
   </div>
 </div>
 
 <script>
   (function () {
-    /* ---------- Красное окно при входе ---------- */
-    const alertOverlay = document.getElementById('unavailableModal');
-    const alertOkBtn = document.getElementById('alertOkBtn');
+    /* ---------- Утилиты для открытия/закрытия модалок ---------- */
+    let lastTrigger = null;
 
-    function openAlert() {
-      alertOverlay.classList.add('open');
-      alertOverlay.setAttribute('aria-hidden', 'false');
+    function openAlert(overlay, trigger) {
+      lastTrigger = trigger || null;
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      setTimeout(function () { alertOkBtn.focus(); }, 60);
+      const focusable = overlay.querySelector('.alert-close-btn, .alert-ok-btn, a, button');
+      if (focusable) setTimeout(function () { focusable.focus(); }, 60);
     }
 
-    function closeAlert() {
-      alertOverlay.classList.remove('open');
-      alertOverlay.setAttribute('aria-hidden', 'true');
+    function closeAlert(overlay) {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (lastTrigger) lastTrigger.focus();
     }
 
-    // Открываем сразу после загрузки страницы
-    window.addEventListener('DOMContentLoaded', openAlert);
+    /* ---------- Окно "Релиз задерживается" ---------- */
+    const delayModal = document.getElementById('delayModal');
+    document.getElementById('delayTrigger').addEventListener('click', function () {
+      openAlert(delayModal, this);
+    });
 
-    alertOkBtn.addEventListener('click', closeAlert);
+    /* ---------- Окно "Минимальные требования" для v1.1.2 ---------- */
+    const requirementsModal = document.getElementById('requirementsModal');
+    document.getElementById('installTrigger').addEventListener('click', function () {
+      openAlert(requirementsModal, this);
+    });
 
-    // Клик по фону и Escape тоже закрывают
-    alertOverlay.addEventListener('click', function (e) {
-      if (e.target === alertOverlay) closeAlert();
+    /* ---------- Окно "Правообладателям" ---------- */
+    const rightsModal = document.getElementById('rightsModal');
+    document.getElementById('rightsTrigger').addEventListener('click', function () {
+      openAlert(rightsModal, this);
+    });
+
+    /* ---------- Окно "Связаться с владельцем" ---------- */
+    const contactModal = document.getElementById('contactModal');
+    document.getElementById('contactTrigger').addEventListener('click', function () {
+      openAlert(contactModal, this);
+    });
+
+    /* ---------- Окно "Программы для создания ПО" ---------- */
+    const softwareModal = document.getElementById('softwareModal');
+    document.getElementById('softwareTrigger').addEventListener('click', function () {
+      openAlert(softwareModal, this);
+    });
+
+    /* ---------- Закрытие модалок ---------- */
+    document.querySelectorAll('.alert-overlay').forEach(function (overlay) {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeAlert(overlay);
+      });
+      overlay.querySelectorAll('[data-close]').forEach(function (btn) {
+        btn.addEventListener('click', function () { closeAlert(overlay); });
+      });
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && alertOverlay.classList.contains('open')) {
-        closeAlert();
+      if (e.key === 'Escape') {
+        const open = document.querySelector('.alert-overlay.open');
+        if (open) closeAlert(open);
       }
     });
 
-    /* ---------- Параллакс фона ---------- */
-    const blobs = document.querySelectorAll('.blob');
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      let raf = null;
-      document.addEventListener('mousemove', function (e) {
-        if (raf) return;
-        raf = requestAnimationFrame(function () {
-          const x = (e.clientX / window.innerWidth - 0.5);
-          const y = (e.clientY / window.innerHeight - 0.5);
-          blobs.forEach(function (blob, i) {
-            const depth = (i + 1) * 8;
-            blob.style.transform = 'translate(' + (x * depth) + 'px, ' + (y * depth) + 'px)';
-          });
-          raf = null;
-        });
-      });
-    }
-
     /* ---------- Обратный отсчёт до 12 ноября 12:00 ---------- */
-    const RELEASE_DATE = new Date(2026, 10, 12, 12, 0, 0); // 12 ноября 2026, 12:00
+    const RELEASE_DATE = new Date(2026, 10, 12, 12, 0, 0);
 
     const elDays  = document.getElementById('cd-days');
     const elHours = document.getElementById('cd-hours');
