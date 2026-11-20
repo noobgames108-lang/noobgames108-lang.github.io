@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="NoobGamesPlatform — новый удобный и быстрый способ скачивания ПО от студии NoobGames.">
-  <title>NoobGamesPlatform — Floor666 v1.2.0</title>
+  <title>NoobGamesPlatform — Floor666 v1.2.1</title>
   <style>
     :root {
       --glass-bg: rgba(255, 255, 255, 0.04);
@@ -218,6 +218,29 @@
       opacity: 0.7;
     }
 
+    /* ===== РАДУЖНАЯ ОБВОДКА СВЕРХУ ДЛЯ v1.2.1 ===== */
+    .floor-card--rainbow::before {
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        #ff2d95 0%,
+        #ff8a00 20%,
+        #ffd400 40%,
+        #00d4ff 60%,
+        #6a5cff 80%,
+        #ff2d95 100%
+      );
+      background-size: 200% 100%;
+      animation: rainbowSlide 4s linear infinite;
+      opacity: 1;
+      box-shadow: 0 0 14px rgba(255, 120, 200, 0.55), 0 0 28px rgba(106, 92, 255, 0.35);
+    }
+
+    @keyframes rainbowSlide {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
     .floor-header {
       display: flex;
       align-items: flex-start;
@@ -250,6 +273,16 @@
       font-weight: 800;
       letter-spacing: 0.5px;
       white-space: nowrap;
+    }
+
+    .floor-version--rainbow {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid transparent;
+      background-image:
+        linear-gradient(rgba(20, 20, 28, 0.95), rgba(20, 20, 28, 0.95)) padding-box,
+        linear-gradient(90deg, #ff2d95, #ff8a00, #ffd400, #00d4ff, #6a5cff) border-box;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
     }
 
     .floor-tagline {
@@ -374,6 +407,63 @@
     .btn-install:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 
     .btn-install svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== ЗАБЛОКИРОВАННАЯ КНОПКА (скоро релиз) ===== */
+    .btn-locked {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(234, 234, 236, 0.5);
+      padding: 20px 64px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      cursor: not-allowed;
+      font-family: inherit;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      user-select: none;
+    }
+
+    .btn-locked svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .release-soon-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255, 212, 0, 0.85);
+      letter-spacing: 0.3px;
+    }
+
+    .release-soon-note svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: clockSpin 3s linear infinite;
+      transform-origin: 50% 50%;
+    }
+
+    @keyframes clockSpin {
+      to { transform: rotate(360deg); }
+    }
 
     /* ===== ИСТОРИЯ СТУДИИ ===== */
     .history-card {
@@ -1002,6 +1092,168 @@
       text-align: left;
     }
 
+    /* ===== ОКНО ПРОВЕРКИ НА РОБОТА ===== */
+    .captcha-box {
+      max-width: 460px;
+    }
+
+    .captcha-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .captcha-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .captcha-task {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.98rem;
+      margin-bottom: 14px;
+      padding: 10px 14px;
+      background: rgba(255, 212, 0, 0.08);
+      border: 1px solid rgba(255, 212, 0, 0.28);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .captcha-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .captcha-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      overflow: hidden;
+      padding: 0;
+      transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.2s var(--ease);
+    }
+
+    .captcha-tile svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .captcha-tile:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .captcha-tile.is-selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(255, 212, 0, 0.45), 0 8px 24px rgba(255, 212, 0, 0.2);
+      transform: scale(0.96);
+    }
+
+    .captcha-tile.is-selected::after {
+      content: "✓";
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0a0a0a;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .captcha-status {
+      min-height: 22px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin: 0 0 6px;
+      text-align: center;
+    }
+
+    .captcha-status.is-error { color: #ff6b6b; }
+    .captcha-status.is-ok { color: #4ade80; }
+
+    .captcha-timer {
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .captcha-verify-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 14px 26px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 14px;
+      border: none;
+      font-family: inherit;
+      color: #0a0a0a;
+      background: linear-gradient(135deg, var(--accent), #e08600);
+      box-shadow: 0 8px 24px rgba(255, 212, 0, 0.3);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), opacity 0.2s var(--ease);
+    }
+
+    .captcha-verify-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .captcha-verify-btn:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255, 212, 0, 0.45);
+    }
+
+    .captcha-verify-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .captcha-refresh {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+
+    .captcha-refresh:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .captcha-refresh:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
     /* ===== АДАПТИВ ===== */
     @media (max-width: 720px) {
       .app { padding: 30px 20px 28px; border-radius: 26px; }
@@ -1010,16 +1262,17 @@
       .social-card,
       .misc-card { padding: 26px 18px 24px; }
       .history-body { padding-left: 14px; }
-      .btn-install { padding: 18px 40px; font-size: 0.95rem; width: 100%; }
+      .btn-install, .btn-locked { padding: 18px 40px; font-size: 0.95rem; width: 100%; }
       .alert-box { padding: 28px 22px 24px; border-radius: 20px; }
       .req-table { font-size: 0.86rem; }
       .req-table tbody th { width: 45%; }
       .social-btn,
       .misc-btn { width: 100%; }
+      .captcha-grid { gap: 8px; }
     }
 
     @media (max-width: 400px) {
-      .btn-install { padding: 16px 24px; font-size: 0.88rem; letter-spacing: 1px; }
+      .btn-install, .btn-locked { padding: 16px 24px; font-size: 0.88rem; letter-spacing: 1px; }
       .bottom-note { font-size: 0.82rem; }
       .floor-features li { font-size: 0.9rem; padding: 11px 14px; }
       .floor-features .fi-icon { width: 34px; height: 34px; }
@@ -1046,6 +1299,8 @@
         transition-duration: 0.01ms !important;
       }
       .blob { animation: none !important; }
+      .floor-card--rainbow::before { animation: none !important; }
+      .release-soon-note svg { animation: none !important; }
     }
   </style>
 </head>
@@ -1067,7 +1322,79 @@
     <p class="brand-tagline"><strong>НубГеймс</strong> — захватывающие игры без интернета.</p>
   </header>
 
-  <!-- ===== СЕКЦИЯ FLOOR666 v1.2.0 ===== -->
+  <!-- ===== FLOOR666 v1.2.1 — СКОРО РЕЛИЗ ===== -->
+  <section class="floor-card floor-card--rainbow" aria-labelledby="floorTitle121">
+    <div class="floor-header">
+      <h2 class="floor-title" id="floorTitle121">Floor666</h2>
+      <span class="floor-version floor-version--rainbow">v1.2.1</span>
+    </div>
+    <p class="floor-tagline">Крупное обновление! <em>Новая графика, контент и оптимизация.</em></p>
+
+    <ul class="floor-features">
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="14" rx="2"/>
+            <path d="M3 15l4-4 3 3 3-4 5 5"/>
+            <circle cx="8" cy="8.5" r="1.2"/>
+          </svg>
+        </span>
+        Реалистичная графика
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 20V8l8-4 8 4v12"/>
+            <path d="M4 20h16"/>
+            <path d="M8 20v-4h2v4M14 20v-4h2v4"/>
+            <path d="M8 11h2M14 11h2M11 8h2"/>
+          </svg>
+        </span>
+        Новый контент
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/>
+          </svg>
+        </span>
+        Оптимизация
+      </li>
+      <li>
+        <span class="fi-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/>
+          </svg>
+        </span>
+        Улучшенные анимации
+      </li>
+    </ul>
+
+    <div class="release-block">
+      <button type="button"
+              class="btn-locked"
+              id="download121Trigger"
+              disabled
+              aria-disabled="true"
+              aria-label="Floor666 v1.2.1 — скоро релиз, скачивание недоступно">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="10" rx="2"/>
+          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        </svg>
+        Скачать
+      </button>
+      <span class="release-soon-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+        Скоро релиз…
+      </span>
+    </div>
+  </section>
+
+  <!-- ===== FLOOR666 v1.2.0 ===== -->
   <section class="floor-card" aria-labelledby="floorTitle120">
     <div class="floor-header">
       <h2 class="floor-title" id="floorTitle120">Floor666</h2>
@@ -1118,19 +1445,18 @@
     </ul>
 
     <div class="release-block">
-      <!-- Кнопка "Скачать" с предупреждением о требованиях -->
       <button type="button"
               class="btn-install"
               id="download120Trigger"
               aria-haspopup="dialog"
-              aria-label="Скачать Floor666 v1.2.0 — открыть требования">
+              aria-label="Установить Floor666 v1.2.0 — открыть требования">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-        Скачать
+        Установить
       </button>
     </div>
   </section>
 
-  <!-- ===== СЕКЦИЯ FLOOR666 v1.1.2 ===== -->
+  <!-- ===== FLOOR666 v1.1.2 ===== -->
   <section class="floor-card" aria-labelledby="floorTitle112">
     <div class="floor-header">
       <h2 class="floor-title" id="floorTitle112">Floor666</h2>
@@ -1347,11 +1673,7 @@
 
     <div class="alert-actions">
       <button type="button" class="alert-close-btn" data-close>Закрыть</button>
-      <a href="https://drive.google.com/file/d/1E3LM4iBshj_uIiGNgaEjGLYXkonIB5Bo/view?usp=sharing"
-         class="alert-ok-btn"
-         target="_blank"
-         rel="noopener noreferrer"
-         data-close>ОК</a>
+      <button type="button" class="alert-ok-btn" id="goCaptcha120">ОК</button>
     </div>
   </div>
 </div>
@@ -1412,7 +1734,6 @@
       Если ваш компьютер не соответствует минимальным требованиям, игра может не запуститься или работать некорректно.
     </p>
 
-    <!-- Красное предупреждение о новой версии -->
     <div class="alert-warning alert-warning-red">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
@@ -1427,11 +1748,32 @@
 
     <div class="alert-actions">
       <button type="button" class="alert-close-btn" data-close>Закрыть</button>
-      <a href="https://drive.google.com/drive/folders/1ZZdCmgLnHg_ZxGDVS5yksLRkJjpJ8ZKU"
-         class="alert-ok-btn"
-         target="_blank"
-         rel="noopener noreferrer"
-         data-close>ОК</a>
+      <button type="button" class="alert-ok-btn" id="goCaptcha112">ОК</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== УНИВЕРСАЛЬНОЕ ОКНО ПРОВЕРКИ НА РОБОТА ===== -->
+<div class="alert-overlay" id="captchaModal" role="dialog" aria-modal="true" aria-labelledby="captchaTitle" aria-hidden="true">
+  <div class="alert-box captcha-box">
+    <span class="alert-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2l8 4v6c0 5-3.4 9.3-8 10-4.6-.7-8-5-8-10V6l8-4z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    </span>
+    <p class="captcha-title" id="captchaTitle">Проверка на робота</p>
+    <p class="captcha-subtitle">Выберите все картинки, соответствующие заданию. Это защита от автоматических загрузок.</p>
+    <p class="captcha-task" id="captchaTask">Выберите все изображения с 🎮</p>
+
+    <div class="captcha-grid" id="captchaGrid" role="group" aria-label="Сетка изображений для проверки"></div>
+
+    <p class="captcha-status" id="captchaStatus" role="status" aria-live="polite"></p>
+    <p class="captcha-timer" id="captchaTimer"></p>
+
+    <div class="alert-actions">
+      <button type="button" class="captcha-refresh" id="captchaRefresh">Обновить</button>
+      <button type="button" class="captcha-verify-btn" id="captchaVerify" disabled>Подтвердить</button>
     </div>
   </div>
 </div>
@@ -1511,6 +1853,8 @@
 
 <script>
   (function () {
+    'use strict';
+
     /* ---------- Утилиты для открытия/закрытия модалок ---------- */
     let lastTrigger = null;
 
@@ -1519,7 +1863,7 @@
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      const focusable = overlay.querySelector('.alert-close-btn, .alert-ok-btn, a, button');
+      const focusable = overlay.querySelector('.alert-close-btn, .alert-ok-btn, .captcha-refresh, .captcha-verify-btn, a, button');
       if (focusable) setTimeout(function () { focusable.focus(); }, 60);
     }
 
@@ -1530,31 +1874,54 @@
       if (lastTrigger) lastTrigger.focus();
     }
 
-    /* ---------- Окно требований для v1.2.0 ---------- */
+    /* ---------- Ссылки на скачивание ---------- */
+    const DOWNLOAD_LINKS = {
+      '120': 'https://drive.google.com/file/d/1E3LM4iBshj_uIiGNgaEjGLYXkonIB5Bo/view?usp=sharing',
+      '112': 'https://drive.google.com/drive/folders/1ZZdCmgLnHg_ZxGDVS5yksLRkJjpJ8ZKU'
+    };
+
+    let pendingDownloadKey = null;
+    let pendingDownloadOverlay = null;
+
+    /* ---------- Открытие окна требований ---------- */
     const requirements120Modal = document.getElementById('requirements120Modal');
+    const requirements112Modal = document.getElementById('requirements112Modal');
+
     document.getElementById('download120Trigger').addEventListener('click', function () {
+      pendingDownloadKey = '120';
+      pendingDownloadOverlay = requirements120Modal;
       openAlert(requirements120Modal, this);
     });
 
-    /* ---------- Окно требований для v1.1.2 ---------- */
-    const requirements112Modal = document.getElementById('requirements112Modal');
     document.getElementById('installTrigger').addEventListener('click', function () {
+      pendingDownloadKey = '112';
+      pendingDownloadOverlay = requirements112Modal;
       openAlert(requirements112Modal, this);
     });
 
-    /* ---------- Окно "Правообладателям" ---------- */
+    /* ---------- Кнопки "ОК" в окнах требований ведут на капчу ---------- */
+    const captchaModal = document.getElementById('captchaModal');
+
+    function goToCaptcha() {
+      if (pendingDownloadOverlay) closeAlert(pendingDownloadOverlay);
+      openAlert(captchaModal, document.getElementById('captchaVerify'));
+      startCaptcha();
+    }
+
+    document.getElementById('goCaptcha120').addEventListener('click', goToCaptcha);
+    document.getElementById('goCaptcha112').addEventListener('click', goToCaptcha);
+
+    /* ---------- Окна "Разное" ---------- */
     const rightsModal = document.getElementById('rightsModal');
     document.getElementById('rightsTrigger').addEventListener('click', function () {
       openAlert(rightsModal, this);
     });
 
-    /* ---------- Окно "Связаться с владельцем" ---------- */
     const contactModal = document.getElementById('contactModal');
     document.getElementById('contactTrigger').addEventListener('click', function () {
       openAlert(contactModal, this);
     });
 
-    /* ---------- Окно "Программы для создания ПО" ---------- */
     const softwareModal = document.getElementById('softwareModal');
     document.getElementById('softwareTrigger').addEventListener('click', function () {
       openAlert(softwareModal, this);
@@ -1563,19 +1930,206 @@
     /* ---------- Закрытие модалок ---------- */
     document.querySelectorAll('.alert-overlay').forEach(function (overlay) {
       overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) closeAlert(overlay);
+        if (e.target === overlay) {
+          if (overlay === captchaModal) stopCaptchaTimer();
+          closeAlert(overlay);
+        }
       });
       overlay.querySelectorAll('[data-close]').forEach(function (btn) {
-        btn.addEventListener('click', function () { closeAlert(overlay); });
+        btn.addEventListener('click', function () {
+          if (overlay === captchaModal) stopCaptchaTimer();
+          closeAlert(overlay);
+        });
       });
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         const open = document.querySelector('.alert-overlay.open');
-        if (open) closeAlert(open);
+        if (open) {
+          if (open === captchaModal) stopCaptchaTimer();
+          closeAlert(open);
+        }
       }
     });
+
+    /* ============================================================
+       CAPTCHA — проверка "выберите все картинки с 🎮"
+    ============================================================ */
+    const EMOJI_POOL = ['🎮', '💀', '🔫', '⚔️', '🎲', '👾', '🕹️'];
+    const GRID_SIZE = 9;
+
+    const captchaGrid = document.getElementById('captchaGrid');
+    const captchaStatus = document.getElementById('captchaStatus');
+    const captchaTask = document.getElementById('captchaTask');
+    const captchaVerify = document.getElementById('captchaVerify');
+    const captchaRefresh = document.getElementById('captchaRefresh');
+    const captchaTimer = document.getElementById('captchaTimer');
+
+    let captchaTargetEmoji = null;
+    let captchaTiles = [];
+    let captchaTimerId = null;
+    let captchaSecondsLeft = 90;
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      }
+      return arr;
+    }
+
+    function makeTileSVG(emoji) {
+      const palette = [
+        ['#1b1b28', '#2a2a3d'],
+        ['#241a2e', '#3a2a48'],
+        ['#1a2430', '#2a3a4a'],
+        ['#2a2018', '#3d2e20'],
+        ['#1c2a1c', '#2d3d2a']
+      ];
+      const pair = palette[Math.floor(Math.random() * palette.length)];
+      const svg =
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">' +
+          '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+            '<stop offset="0" stop-color="' + pair[0] + '"/>' +
+            '<stop offset="1" stop-color="' + pair[1] + '"/>' +
+          '</linearGradient></defs>' +
+          '<rect width="100" height="100" fill="url(#g)"/>' +
+          '<circle cx="' + (10 + Math.random() * 80) + '" cy="' + (10 + Math.random() * 80) + '" r="' + (5 + Math.random() * 10) + '" fill="rgba(255,255,255,0.03)"/>' +
+          '<text x="50" y="50" font-size="46" text-anchor="middle" dominant-baseline="central" ' +
+            'style="font-family:AppleColorEmoji,Segoe UI Emoji,NotoColorEmoji,sans-serif">' + emoji + '</text>' +
+        '</svg>';
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    function buildCaptcha() {
+      const targetIndex = Math.floor(Math.random() * EMOJI_POOL.length);
+      captchaTargetEmoji = EMOJI_POOL[targetIndex];
+
+      const targetCount = 2 + Math.floor(Math.random() * 2);
+
+      const others = EMOJI_POOL.filter(function (e) { return e !== captchaTargetEmoji; });
+      const tiles = [];
+      for (let i = 0; i < targetCount; i++) tiles.push(captchaTargetEmoji);
+      while (tiles.length < GRID_SIZE) {
+        tiles.push(others[Math.floor(Math.random() * others.length)]);
+      }
+      shuffle(tiles);
+
+      captchaTiles = [];
+      captchaGrid.innerHTML = '';
+      tiles.forEach(function (emoji, idx) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'captcha-tile';
+        btn.setAttribute('aria-pressed', 'false');
+        btn.setAttribute('aria-label', 'Плитка ' + (idx + 1) + ': ' + emoji);
+        btn.innerHTML = '<img alt="" src="' + makeTileSVG(emoji) + '">';
+        btn.addEventListener('click', function () {
+          btn.classList.toggle('is-selected');
+          const selected = btn.classList.contains('is-selected');
+          btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+          updateCaptchaVerifyState();
+        });
+        captchaGrid.appendChild(btn);
+        captchaTiles.push({ el: btn, emoji: emoji, selected: false });
+      });
+
+      captchaTask.textContent = 'Выберите все изображения с ' + captchaTargetEmoji;
+      captchaStatus.textContent = '';
+      captchaStatus.className = 'captcha-status';
+      updateCaptchaVerifyState();
+    }
+
+    function updateCaptchaVerifyState() {
+      const anySelected = captchaTiles.some(function (t) {
+        return t.el.classList.contains('is-selected');
+      });
+      captchaVerify.disabled = !anySelected;
+    }
+
+    function getSelectedEmojis() {
+      return captchaTiles
+        .filter(function (t) { return t.el.classList.contains('is-selected'); })
+        .map(function (t) { return t.emoji; });
+    }
+
+    function startCaptchaTimerLoop() {
+      captchaTimerId = setInterval(function () {
+        captchaSecondsLeft--;
+        updateCaptchaTimerText();
+        if (captchaSecondsLeft <= 0) {
+          stopCaptchaTimer();
+          captchaStatus.textContent = 'Время вышло. Сгенерирована новая проверка.';
+          captchaStatus.className = 'captcha-status is-error';
+          buildCaptcha();
+          captchaSecondsLeft = 90;
+          updateCaptchaTimerText();
+          startCaptchaTimerLoop();
+        }
+      }, 1000);
+    }
+
+    function startCaptcha() {
+      stopCaptchaTimer();
+      buildCaptcha();
+      captchaSecondsLeft = 90;
+      updateCaptchaTimerText();
+      startCaptchaTimerLoop();
+    }
+
+    function stopCaptchaTimer() {
+      if (captchaTimerId) {
+        clearInterval(captchaTimerId);
+        captchaTimerId = null;
+      }
+    }
+
+    function updateCaptchaTimerText() {
+      captchaTimer.textContent = 'Осталось: ' + captchaSecondsLeft + ' сек.';
+    }
+
+    /* ---------- Проверка ответа ---------- */
+    captchaVerify.addEventListener('click', function () {
+      const selected = getSelectedEmojis();
+      if (selected.length === 0) return;
+
+      const targetTiles = captchaTiles.filter(function (t) { return t.emoji === captchaTargetEmoji; });
+      const allTargetsSelected = targetTiles.every(function (t) {
+        return t.el.classList.contains('is-selected');
+      });
+      const noWrongSelected = selected.every(function (e) { return e === captchaTargetEmoji; });
+
+      if (allTargetsSelected && noWrongSelected) {
+        captchaStatus.textContent = 'Проверка пройдена! Перенаправляем…';
+        captchaStatus.className = 'captcha-status is-ok';
+        captchaVerify.disabled = true;
+        stopCaptchaTimer();
+
+        const url = DOWNLOAD_LINKS[pendingDownloadKey] || DOWNLOAD_LINKS['120'];
+        setTimeout(function () {
+          closeAlert(captchaModal);
+          window.open(url, '_blank', 'noopener,noreferrer');
+        }, 700);
+      } else {
+        captchaStatus.textContent = 'Неверно. Выберите заново — проверка обновлена.';
+        captchaStatus.className = 'captcha-status is-error';
+        stopCaptchaTimer();
+        buildCaptcha();
+        captchaSecondsLeft = 90;
+        updateCaptchaTimerText();
+        startCaptchaTimerLoop();
+      }
+    });
+
+    captchaRefresh.addEventListener('click', function () {
+      stopCaptchaTimer();
+      buildCaptcha();
+      captchaSecondsLeft = 90;
+      updateCaptchaTimerText();
+      startCaptchaTimerLoop();
+    });
+
   })();
 </script>
 
